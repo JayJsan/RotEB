@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField]
     private float movementSpeed = 100;
     Vector3 lastBallVelocity;
      
@@ -18,13 +19,13 @@ public class BallMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lastBallVelocity = rb.velocity;
+        // lastBallVelocity = rb.velocity;
     }
 
     // Ball Bounce on Collision
-    private void OnCollisionEnter2D(Collision2D collision) {
-        var speed = lastBallVelocity.magnitude;
-        var direction = Vector3.Reflect(lastBallVelocity.normalized, collision.contacts[0].normal);
-        rb.velocity = direction * Mathf.Max(speed, 0f);
-    }
+    // private void OnCollisionEnter2D(Collision2D collision) {
+    //     var speed = lastBallVelocity.magnitude;
+    //     var direction = Vector3.Reflect(lastBallVelocity.normalized, collision.contacts[0].normal);
+    //     rb.velocity = direction * Mathf.Max(speed, 0f);
+    // }
 }
