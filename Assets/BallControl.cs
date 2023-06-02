@@ -72,11 +72,11 @@ public class BallControl : MonoBehaviour
 
             // ----     Guide Line      -----
             Vector3 trajectoryDirection = -(currentMousePosition - initialMousePosition);
-
+            Vector3 trajectoryEndPos = transform.position + trajectoryDirection;
             // _trajectoryLineRenderer.SetPosition(0, transform.position);
             // _trajectoryLineRenderer.SetPosition(1, trajectoryDirection * 2);
             _trajectoryLineRenderer.SetPosition(0, transform.position);
-            _trajectoryLineRenderer.SetPosition(1, transform.position + trajectoryDirection);
+            _trajectoryLineRenderer.SetPosition(1, trajectoryEndPos);
 
             // ----     Guide Line      -----
         }
@@ -113,7 +113,7 @@ public class BallControl : MonoBehaviour
         _trajectoryLineRenderer.material = material;
 
         _trajectoryLineRenderer.startWidth = 0.2f;
-        _trajectoryLineRenderer.endWidth = 0.2f;
+        _trajectoryLineRenderer.endWidth = 0f;
 
         _trajectoryLineRenderer.startColor = Color.white;
         _trajectoryLineRenderer.endColor = Color.white;
