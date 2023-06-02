@@ -85,6 +85,7 @@ public class BallControl : MonoBehaviour
             // ---- Player Control Line -----
             _playerLineRenderer.enabled = false;
             Vector3 inputForce = _playerLineRenderer.GetPosition(0) - _playerLineRenderer.GetPosition(1);
+            _rb2D.velocity = Vector2.zero;
             _rb2D.AddForce(inputForce, ForceMode2D.Impulse);
             // ---- Player Control Line -----
 
@@ -118,13 +119,5 @@ public class BallControl : MonoBehaviour
         _trajectoryLineRenderer.startColor = Color.white;
         _trajectoryLineRenderer.endColor = Color.white;
         _trajectoryLineRenderer.numCapVertices = 20;
-    }
-
-    Vector2 CalculatePointInTrajectory(Vector2 initialPosition, Vector2 velocity, float time)
-    {
-        // Calculate the position at a given time in the trajectory
-        Vector2 position = initialPosition + velocity * time;
-
-        return position;
     }
 }
