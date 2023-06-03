@@ -42,9 +42,10 @@ public class BallControl : MonoBehaviour
     void Update()
     {
         if (isEnabled) {
-        }
             HandleBallInput();
         }
+    }
+            
 
     private void SetupPlayerLineControl() {
         m_playerLineRenderer.enabled = false;

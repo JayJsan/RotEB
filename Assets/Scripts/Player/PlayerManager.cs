@@ -48,7 +48,12 @@ public class PlayerManager : MonoBehaviour
     public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
     public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
     public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
-    public void DecreasePlayerLives(int amount) { m_playerStats.DecreasePlayerLives(amount); }
+    public void DecreasePlayerLives(int amount) { 
+        m_playerStats.DecreasePlayerLives(amount); 
+        if (GetPlayerLives() == 0) {
+            GameManager.Instance.SetGameState(StateType.GAMEOVER);
+        }
+    }
     
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
@@ -73,8 +78,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     private IEnumerator PlayerRespawning() {
+        PlayerManager.Instance.DisablePlayerControl();
         int currentFlashes = 0;
-        int maxFlashes = 3;
+        int maxFlashes = 4;
         while (currentFlashes < maxFlashes) {
             m_player.GetComponent<SpriteRenderer>().color = Color.clear;
             yield return new WaitForSeconds(0.2f);

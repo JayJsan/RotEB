@@ -34,13 +34,19 @@ public class GameManager : MonoBehaviour
             break;
 
             case StateType.PLAYERSUNK:
-                m_currentGameState = StateType.PLAYERRESPAWN;
+                SetGameState(StateType.PLAYERRESPAWN);
             break;
 
+            // Initial player respawn
             case StateType.PLAYERRESPAWN:
                 PlayerManager.Instance.DisablePlayerControl();
                 PlayerManager.Instance.RespawnPlayer();
-                m_currentGameState = StateType.PLAYERTURN;
+                SetGameState(StateType.PLAYERRESPAWNING);
+            break;
+
+            // Player is respawning
+            case StateType.PLAYERRESPAWNING:
+                PlayerManager.Instance.DisablePlayerControl();
             break;
 
             case StateType.PLAYERTURN:
