@@ -16,6 +16,7 @@ public class BallControl : MonoBehaviour
     private LineRenderer m_trajectoryLineRenderer;
     private Rigidbody2D m_rb2D;
     private Vector3 m_initialMousePosition;
+    private bool isEnabled = true;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,38 @@ public class BallControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isEnabled) {
+        }
+            HandleBallInput();
+        }
+
+    private void SetupPlayerLineControl() {
+        m_playerLineRenderer.enabled = false;
+        m_playerLineRenderer.positionCount = 2;
+        m_playerLineRenderer.material = material;
+
+        m_playerLineRenderer.startWidth = startWidth;
+        m_playerLineRenderer.endWidth = endWidth;
+
+        m_playerLineRenderer.startColor = startColor;
+        m_playerLineRenderer.endColor = endColor;
+        m_playerLineRenderer.numCapVertices = 20;
+    }
+
+    private void SetupGuideLine() {
+        m_trajectoryLineRenderer.enabled = false;
+        m_trajectoryLineRenderer.positionCount = 2;
+        m_trajectoryLineRenderer.material = material;
+
+        m_trajectoryLineRenderer.startWidth = 0.2f;
+        m_trajectoryLineRenderer.endWidth = 0f;
+
+        m_trajectoryLineRenderer.startColor = Color.white;
+        m_trajectoryLineRenderer.endColor = Color.white;
+        m_trajectoryLineRenderer.numCapVertices = 20;
+    }
+
+    private void HandleBallInput() {
         if (Input.GetMouseButtonDown(0)) {
             // ---- Player Control Line -----
             m_initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -86,36 +119,15 @@ public class BallControl : MonoBehaviour
             m_rb2D.velocity = Vector2.zero;
             m_rb2D.AddForce(inputForce, ForceMode2D.Impulse);
             // ---- Player Control Line -----
-
+            Debug.Log("Force Applied: " + inputForce);
             // ----     Guide Line      -----
             m_trajectoryLineRenderer.enabled = false;
             // ----     Guide Line      -----
         }
+    
     }
+    public void EnableBallControls() { isEnabled = true; }
 
-    private void SetupPlayerLineControl() {
-        m_playerLineRenderer.enabled = false;
-        m_playerLineRenderer.positionCount = 2;
-        m_playerLineRenderer.material = material;
+    public void DisableBallControls() { isEnabled = false; }
 
-        m_playerLineRenderer.startWidth = startWidth;
-        m_playerLineRenderer.endWidth = endWidth;
-
-        m_playerLineRenderer.startColor = startColor;
-        m_playerLineRenderer.endColor = endColor;
-        m_playerLineRenderer.numCapVertices = 20;
-    }
-
-    private void SetupGuideLine() {
-        m_trajectoryLineRenderer.enabled = false;
-        m_trajectoryLineRenderer.positionCount = 2;
-        m_trajectoryLineRenderer.material = material;
-
-        m_trajectoryLineRenderer.startWidth = 0.2f;
-        m_trajectoryLineRenderer.endWidth = 0f;
-
-        m_trajectoryLineRenderer.startColor = Color.white;
-        m_trajectoryLineRenderer.endColor = Color.white;
-        m_trajectoryLineRenderer.numCapVertices = 20;
-    }
 }
