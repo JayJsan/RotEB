@@ -499,7 +499,6 @@ GameObject:
   - component: {fileID: 441907257}
   - component: {fileID: 441907258}
   - component: {fileID: 441907260}
-  - component: {fileID: 441907259}
   m_Layer: 0
   m_Name: TopMiddlePocket
   m_TagString: Untagged
@@ -590,18 +589,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.00000047683716}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &441907259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441907255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb904b6d09f87794389dc92c6761b530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &441907260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,7 +615,7 @@ GameObject:
   - component: {fileID: 452720417}
   m_Layer: 0
   m_Name: TestBall
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

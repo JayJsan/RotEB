@@ -21,17 +21,16 @@ public class HoleFunctionality : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider) {
         GameObject collidedObject = collider.gameObject;
         collider.enabled = false;
-        m_circleCollider2D.enabled = false;
-        collidedObject.SetActive(false);
+        
 
         if (!hasEntered) {
             Debug.Log(collidedObject.name + " has fallened into the " + this.name +"!");
             switch (collidedObject.tag) {
                 case "Player":
-                    PlayerManager.Instance.DecreasePlayerLives(1);    
+                    SunkPlayer();
                 break;
                 case "Enemy":
-                    Debug.Log("Enemy sunk!");
+                    SunkEnemy(collidedObject);
                 break;
                 default:
                     Debug.Log("wtf did you sink?");
@@ -45,5 +44,17 @@ public class HoleFunctionality : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collider) {
         hasEntered = false;
         m_circleCollider2D.enabled = true;
+    }
+
+    private void SunkPlayer() {
+        Debug.Log("Player sunk!");
+        PlayerManager.Instance.DecreasePlayerLives(1);
+        PlayerManager.Instance.DeactivatePlayer();
+        GameManager.Instance.SetGameState(StateType.PLAYERSUNK);
+    }
+
+    private void SunkEnemy(GameObject enemy) {
+        Debug.Log("Enemy sunk!");
+        enemy.SetActive(false);
     }
 }
