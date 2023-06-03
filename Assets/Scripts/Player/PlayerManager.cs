@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     private GameObject m_player;
     [SerializeField]
     private PlayerStats m_playerStats;
+        [SerializeField]
+    private BallControl m_playerControl;
 
 
     private void Awake() {
@@ -31,6 +33,7 @@ public class PlayerManager : MonoBehaviour
         if (!System.Object.ReferenceEquals(GameObject.FindGameObjectWithTag("Player"), null)) {
             m_player = GameObject.FindGameObjectWithTag("Player");
             m_playerStats = m_player.GetComponent<PlayerStats>();
+            m_playerControl = m_player.GetComponent<BallControl>();
         } else {
             Debug.Log("Player Missing!");
         }
@@ -43,11 +46,14 @@ public class PlayerManager : MonoBehaviour
     }
 
     public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
+    public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
+    public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
     public void DecreasePlayerLives(int amount) { m_playerStats.DecreasePlayerLives(amount); }
     
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
         ReactivatePlayer();
+        StartCoroutine(PlayerRespawning());
     }
 
     public void RespawnPlayer(Vector3 respawnPosition) {
@@ -70,9 +76,9 @@ public class PlayerManager : MonoBehaviour
         int currentFlashes = 0;
         int maxFlashes = 3;
         while (currentFlashes < maxFlashes) {
-            m_player.GetComponent<SpriteRenderer>().color = Color.white;
-            yield return new WaitForSeconds(0.2f);
             m_player.GetComponent<SpriteRenderer>().color = Color.clear;
+            yield return new WaitForSeconds(0.2f);
+            m_player.GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(0.2f);
             currentFlashes++;
         }

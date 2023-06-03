@@ -38,10 +38,14 @@ public class GameManager : MonoBehaviour
             break;
 
             case StateType.PLAYERRESPAWN:
+                PlayerManager.Instance.DisablePlayerControl();
                 PlayerManager.Instance.RespawnPlayer();
                 m_currentGameState = StateType.PLAYERTURN;
             break;
 
+            case StateType.PLAYERTURN:
+                PlayerManager.Instance.EnablePlayerControl();
+            break;
             default:
 
             break;
