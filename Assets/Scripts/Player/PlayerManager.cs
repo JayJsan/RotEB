@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
+    [SerializeField]
     private GameObject m_player;
+    [SerializeField]
     private PlayerStats m_playerStats;
 
     private void Awake() {
@@ -23,6 +25,8 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
+        
         if (!System.Object.ReferenceEquals(GameObject.FindGameObjectWithTag("Player"), null)) {
             m_player = GameObject.FindGameObjectWithTag("Player");
             m_playerStats = m_player.GetComponent<PlayerStats>();
@@ -37,5 +41,6 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
     public void DecreasePlayerLives(int amount) { m_playerStats.DecreasePlayerLives(amount); }
 }

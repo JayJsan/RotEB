@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        TextManager.Instance.UpdateLivesTextAmount(m_playerLives);
     }
 
     // Update is called once per frame
@@ -23,6 +23,10 @@ public class PlayerStats : MonoBehaviour
             m_playerLives = 0;
         } else {
             m_playerLives = m_playerLives - amount;
+            TextManager.Instance.UpdateLivesTextAmount(m_playerLives);
         }
+    }
+    public int GetPlayerLives() {
+        return m_playerLives;
     }
 }
