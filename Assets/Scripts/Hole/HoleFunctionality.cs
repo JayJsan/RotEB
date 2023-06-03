@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HoleFunctionality : MonoBehaviour
 {
-    private CircleCollider2D _circleCollider2D;
+    private CircleCollider2D m_circleCollider2D;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +23,19 @@ public class HoleFunctionality : MonoBehaviour
         collider.enabled = false;
 
         Debug.Log(collidedObject.name + " has fallened into the " + this.name +"!");
+
+
+        switch (collidedObject.tag) {
+            case "Player":
+                PlayerManager.Instance.DecreasePlayerLives(1);    
+            break;
+            case "Enemy":
+                Debug.Log("Enemy sunk!");
+            break;
+            default:
+                Debug.Log("wtf did you sink?");
+            break;
+        }
         collidedObject.SetActive(false);
     }
 }
