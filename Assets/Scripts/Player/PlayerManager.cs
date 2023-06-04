@@ -98,6 +98,19 @@ public class PlayerManager : MonoBehaviour
     }
 
     public GameObject GetNearestPocketToPlayer() {
-        return null;
+        float closestDistance = 999999f;
+        GameObject closestPocket = m_pockets[0]; // Top left by default, should never happen
+
+        // Finds the smallest distance between two points.
+        foreach (GameObject pocket in m_pockets) {
+            float pocketDistance = Vector3.Distance(pocket.transform.position, m_player.transform.position);
+            if (pocketDistance < closestDistance) {
+                closestDistance = pocketDistance;
+                closestPocket = pocket;
+            }
+        }
+
+        //Debug.Log("Closest Pocket to Player: " + closestPocket.name);
+        return closestPocket;
     }
 }

@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 117346372}
   m_Layer: 0
   m_Name: BottomMiddlePocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 308280989}
   m_Layer: 0
   m_Name: BottomRightPocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 441907260}
   m_Layer: 0
   m_Name: TopMiddlePocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 791647757}
   m_Layer: 0
   m_Name: BottomLeftPocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1359,8 +1359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 124, y: -60}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 265.76672, y: -60}
+  m_SizeDelta: {x: 483.5334, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &833947238
 MonoBehaviour:
@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -11.046753, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1973,6 +1973,13 @@ MonoBehaviour:
   m_player: {fileID: 0}
   m_playerStats: {fileID: 0}
   m_playerControl: {fileID: 0}
+  m_pockets:
+  - {fileID: 1758988205}
+  - {fileID: 441907255}
+  - {fileID: 2005957482}
+  - {fileID: 791647753}
+  - {fileID: 117346368}
+  - {fileID: 308280985}
 --- !u!1 &1563186101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2105,7 @@ GameObject:
   - component: {fileID: 1758988209}
   m_Layer: 0
   m_Name: TopLeftPocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2471,7 +2478,7 @@ GameObject:
   - component: {fileID: 2005957486}
   m_Layer: 0
   m_Name: TopRightPocket
-  m_TagString: Untagged
+  m_TagString: Pocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

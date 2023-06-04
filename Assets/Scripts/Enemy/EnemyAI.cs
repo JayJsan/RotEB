@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    private GameObject m_closestPocket;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,9 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate() {
+        m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
     }
 }
