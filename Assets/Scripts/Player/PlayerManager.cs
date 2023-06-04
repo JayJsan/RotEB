@@ -113,4 +113,8 @@ public class PlayerManager : MonoBehaviour
         //Debug.Log("Closest Pocket to Player: " + closestPocket.name);
         return closestPocket;
     }
+
+    public Transform GetPlayerTransform() {
+        return m_player.transform;
+    }
 }
