@@ -9,6 +9,8 @@ public class EnemyAI : MonoBehaviour
     private CircleCollider2D cc2D;
     [SerializeField]
     private ContactFilter2D contactPredictionFilter;
+
+    public Vector3 angleAdjustment = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,17 +34,23 @@ public class EnemyAI : MonoBehaviour
     private void GetAngleToHitPlayer() {
         Transform playerTransform = PlayerManager.Instance.GetPlayerTransform();
         Transform closestPocketTransform = m_closestPocket.transform;
+
+
+
         Vector2 directionToHitPlayerIntoPocket = closestPocketTransform.position - playerTransform.position;
-        Vector2 directionTowardsPlayerBall = playerTransform.position - transform.position;
+        Vector2 directionTowardsPlayerBall = playerTransform.position - transform.position + angleAdjustment;
+
         RaycastHit2D[] hits = {new RaycastHit2D()};
         //ContactFilter2D filter = new ContactFilter2D().NoFilter();
-        int numberOfHits = Physics2D.CircleCast(transform.position, cc2D.radius, directionTowardsPlayerBall, contactPredictionFilter, hits, 10f);
+        int numberOfHits = Physics2D.CircleCast(transform.position, cc2D.radius, directionTowardsPlayerBall, contactPredictionFilter, hits, 20f);
+
+        // Line from ball to player ball
+        Debug.DrawLine(transform.position, playerTransform.position + angleAdjustment, Color.green, 2f);
+
         if (numberOfHits >= 1) {
-            // Line from ball to player ball
-            //Debug.DrawLine(transform.position, playerTransform.position, Color.red, 2f);
             
             // Normal of point of contact from playerball.
-            Debug.DrawLine(hits[0].point, hits[0].point + hits[0].normal, Color.cyan, 2f);
+            Debug.DrawLine(hits[0].point, hits[0].point - hits[0].normal * 8, Color.cyan, 2f);
 
             // Line from playerBall to pocket
             Debug.DrawLine(playerTransform.position, closestPocketTransform.position, Color.magenta, 2f);
