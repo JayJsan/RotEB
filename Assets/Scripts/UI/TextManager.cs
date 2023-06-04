@@ -39,4 +39,8 @@ public class TextManager : MonoBehaviour
     public void UpdateLivesTextAmount(int amount) {
         livesTMP.text = "Lives : " + amount;
     }
+
+    public void UpdateLivesTextStatus(string status) {
+        livesTMP.text = "Lives : " + status;
+    }
 }

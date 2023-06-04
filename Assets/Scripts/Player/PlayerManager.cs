@@ -9,10 +9,10 @@ public class PlayerManager : MonoBehaviour
     private GameObject m_player;
     [SerializeField]
     private PlayerStats m_playerStats;
-        [SerializeField]
+    [SerializeField]
     private BallControl m_playerControl;
-
-
+    [SerializeField]
+    private GameObject[] m_pockets;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -37,6 +37,8 @@ public class PlayerManager : MonoBehaviour
         } else {
             Debug.Log("Player Missing!");
         }
+
+        m_pockets = GameObject.FindGameObjectsWithTag("Pocket");
     }
 
     // Update is called once per frame
@@ -81,7 +83,10 @@ public class PlayerManager : MonoBehaviour
         PlayerManager.Instance.DisablePlayerControl();
         int currentFlashes = 0;
         int maxFlashes = 4;
+        string livesText = "Respawning";
         while (currentFlashes < maxFlashes) {
+            TextManager.Instance.UpdateLivesTextStatus(livesText);
+            livesText = livesText + ".";
             m_player.GetComponent<SpriteRenderer>().color = Color.clear;
             yield return new WaitForSeconds(0.2f);
             m_player.GetComponent<SpriteRenderer>().color = Color.white;
@@ -89,5 +94,10 @@ public class PlayerManager : MonoBehaviour
             currentFlashes++;
         }
         GameManager.Instance.SetGameState(StateType.PLAYERTURN);
+        TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
+    }
+
+    public GameObject GetNearestPocketToPlayer() {
+        return null;
     }
 }
