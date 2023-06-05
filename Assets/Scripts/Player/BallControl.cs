@@ -118,7 +118,7 @@ public class BallControl : MonoBehaviour
             m_playerLineRenderer.enabled = false;
             Vector3 inputForce = m_playerLineRenderer.GetPosition(0) - m_playerLineRenderer.GetPosition(1);
             m_rb2D.velocity = Vector2.zero;
-            m_rb2D.AddForce(inputForce, ForceMode2D.Impulse);
+            m_rb2D.AddForce(inputForce * 1.5f, ForceMode2D.Impulse);
             // ---- Player Control Line -----
             Debug.Log("Force Applied: " + inputForce);
             // ----     Guide Line      -----
