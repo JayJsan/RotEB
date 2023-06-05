@@ -11,6 +11,8 @@ public class EnemyAI : MonoBehaviour
     private ContactFilter2D contactPredictionFilter;
 
     public Vector3 angleAdjustment = Vector3.zero;
+
+    public float forceMultiplier = 1f;
     private bool inCooldown = false;
     // Start is called before the first frame update
     void Start()
@@ -118,6 +120,6 @@ public class EnemyAI : MonoBehaviour
         }
         //Debug.DrawLine(transform.position, closestDirectionTowardsPlayerBallToHitPlayerIntoPocket, Color.yellow, 2f);
         rb2D.velocity = Vector2.zero;
-        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f, ForceMode2D.Impulse);
+        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f * forceMultiplier, ForceMode2D.Impulse);
     }
 }
