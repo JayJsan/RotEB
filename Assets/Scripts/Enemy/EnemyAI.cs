@@ -117,6 +117,7 @@ public class EnemyAI : MonoBehaviour
             // If so, set closestDirectionTowardsPlayerBallToHitPlayerIntoPocket to currentPrediction.
         }
         //Debug.DrawLine(transform.position, closestDirectionTowardsPlayerBallToHitPlayerIntoPocket, Color.yellow, 2f);
+        rb2D.velocity = Vector2.zero;
         rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f, ForceMode2D.Impulse);
     }
 }

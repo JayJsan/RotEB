@@ -84,6 +84,7 @@ public class PlayerManager : MonoBehaviour
         int currentFlashes = 0;
         int maxFlashes = 4;
         string livesText = "Respawning";
+        m_player.GetComponent<CircleCollider2D>().enabled = false;
         while (currentFlashes < maxFlashes) {
             TextManager.Instance.UpdateLivesTextStatus(livesText);
             livesText = livesText + ".";
@@ -93,6 +94,7 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             currentFlashes++;
         }
+        m_player.GetComponent<CircleCollider2D>().enabled = true;
         GameManager.Instance.SetGameState(StateType.PLAYERTURN);
         TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
     }

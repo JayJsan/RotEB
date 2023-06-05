@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private StateType m_currentGameState = StateType.DEFAULT;
-    
+    public GameObject panel;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -56,9 +56,26 @@ public class GameManager : MonoBehaviour
 
             break;
         }
+
+
+
+
+        if (Input.GetKey(KeyCode.Space)) {
+            DoSlowMotion();
+        } else {
+            Time.timeScale += (1f / 0.5f) * Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+            panel.SetActive(false);
+        }
     }
 
     public void SetGameState(StateType state) {
         m_currentGameState = state;
+    }
+
+    public void DoSlowMotion() {
+        panel.SetActive(true);
+        Time.timeScale = 0.05f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 }
