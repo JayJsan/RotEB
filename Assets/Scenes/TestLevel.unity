@@ -752,6 +752,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,6 +1242,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &729996014
 Rigidbody2D:
   serializedVersion: 4
@@ -1809,6 +1811,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &937723051
 Rigidbody2D:
   serializedVersion: 4
@@ -1960,6 +1963,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &1107060611
 Rigidbody2D:
   serializedVersion: 4
@@ -2242,6 +2246,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &1234194299
 Rigidbody2D:
   serializedVersion: 4
@@ -2848,6 +2853,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &1664728616
 Rigidbody2D:
   serializedVersion: 4
@@ -3224,6 +3230,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &1810804918
 Rigidbody2D:
   serializedVersion: 4
@@ -3375,6 +3382,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
+  forceMultiplier: 20
 --- !u!50 &1861641655
 Rigidbody2D:
   serializedVersion: 4
