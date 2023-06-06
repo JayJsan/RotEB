@@ -85,9 +85,9 @@ public class PlayerManager : MonoBehaviour
         m_player.GetComponent<CircleCollider2D>().enabled = true;
         TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
         if (PlayerManager.Instance.GetPlayerLives() == 0) {
-            GameManager.Instance.SetGameState(StateType.GAME_OVER);
+            GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
         } else {
-            GameManager.Instance.SetGameState(StateType.PLAYER_TURN);
+            GameManager.Instance.UpdateGameState(StateType.PLAYER_TURN);
         }
     }
     #endregion
