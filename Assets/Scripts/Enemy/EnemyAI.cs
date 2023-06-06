@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
 
     public float forceMultiplier = 1f;
     private bool inCooldown = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate() {
         m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
 
-        if (!inCooldown) {
+        if ((!inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
             StartCoroutine(Cooldowm());
         }
     }

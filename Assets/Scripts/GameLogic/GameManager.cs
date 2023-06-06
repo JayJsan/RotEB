@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private StateType m_currentGameState = StateType.DEFAULT;
     public GameObject panel;
+
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -31,27 +32,39 @@ public class GameManager : MonoBehaviour
     {
         switch (m_currentGameState) {
             case StateType.DEFAULT:
-
+                CanvasManager.Instance.SwitchCanvas(CanvasType.GameUI);
             break;
 
-            case StateType.PLAYERSUNK:
-                SetGameState(StateType.PLAYERRESPAWN);
+            case StateType.PLAYER_SUNK:
+                SetGameState(StateType.PLAYER_RESPAWN);
             break;
 
             // Initial player respawn
-            case StateType.PLAYERRESPAWN:
+            case StateType.PLAYER_RESPAWN:
                 PlayerManager.Instance.DisablePlayerControl();
                 PlayerManager.Instance.RespawnPlayer();
-                SetGameState(StateType.PLAYERRESPAWNING);
+                SetGameState(StateType.PLAYER_RESPAWNING);
             break;
 
             // Player is respawning
-            case StateType.PLAYERRESPAWNING:
+            case StateType.PLAYER_RESPAWNING:
                 PlayerManager.Instance.DisablePlayerControl();
+                if (PlayerManager.Instance.GetPlayerLives() == 0) {
+                    GameManager.Instance.SetGameState(StateType.GAME_OVER);
+                }
             break;
 
-            case StateType.PLAYERTURN:
+            case StateType.PLAYER_TURN:
+                CanvasManager.Instance.SwitchCanvas(CanvasType.GameUI);
                 PlayerManager.Instance.EnablePlayerControl();
+            break;
+
+            case StateType.MAIN_MENU:
+                CanvasManager.Instance.SwitchCanvas(CanvasType.MainMenu);
+            break;
+
+            case StateType.GAME_OVER:
+                CanvasManager.Instance.SwitchCanvas(CanvasType.EndScreen);
             break;
             default:
 
@@ -70,6 +83,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // public void UpdateGameState(StateType state) {
+
+    // }
+
     public void SetGameState(StateType state) {
         m_currentGameState = state;
     }
@@ -78,5 +95,17 @@ public class GameManager : MonoBehaviour
         panel.SetActive(true);
         Time.timeScale = 0.05f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    public void StartGame() {
+
+    }
+
+    public void RestartGame() {
+
+    }
+
+    public bool IsGameStateThis(StateType stateType) {
+        return stateType == m_currentGameState;
     }
 }

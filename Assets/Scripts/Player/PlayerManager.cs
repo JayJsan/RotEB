@@ -53,9 +53,6 @@ public class PlayerManager : MonoBehaviour
 
     public void DecreasePlayerLives(int amount) { 
         m_playerStats.DecreasePlayerLives(amount); 
-        if (GetPlayerLives() == 0) {
-            GameManager.Instance.SetGameState(StateType.GAMEOVER);
-        }
     }
 
     public void RespawnPlayer() {
@@ -69,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
     }
-    
+
     private IEnumerator PlayerRespawning() {
         PlayerManager.Instance.DisablePlayerControl();
         int currentFlashes = 0;
@@ -86,8 +83,12 @@ public class PlayerManager : MonoBehaviour
             currentFlashes++;
         }
         m_player.GetComponent<CircleCollider2D>().enabled = true;
-        GameManager.Instance.SetGameState(StateType.PLAYERTURN);
         TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
+        if (PlayerManager.Instance.GetPlayerLives() == 0) {
+            GameManager.Instance.SetGameState(StateType.GAME_OVER);
+        } else {
+            GameManager.Instance.SetGameState(StateType.PLAYER_TURN);
+        }
     }
     #endregion
 

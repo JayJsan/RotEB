@@ -50,7 +50,7 @@ public class HoleFunctionality : MonoBehaviour
         Debug.Log("Player sunk!");
         PlayerManager.Instance.DecreasePlayerLives(1);
         PlayerManager.Instance.DeactivatePlayer();
-        GameManager.Instance.SetGameState(StateType.PLAYERSUNK);
+        GameManager.Instance.SetGameState(StateType.PLAYER_SUNK);
     }
 
     private void SunkEnemy(GameObject enemy) {

@@ -6,20 +6,18 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class CanvasSwitcher : MonoBehaviour
 {
+    //public ButtonType buttonType;
     public CanvasType desiredcanvasType;
-    
-    CanvasManager canvasManager;
-    Button menuButton;
-    
+    Button button;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        button = GetComponent<Button>();
+        button.onClick.AddListener(OnButtonClicked);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void OnButtonClicked() {
+        CanvasManager.Instance.SwitchCanvas(desiredcanvasType);
     }
 }
