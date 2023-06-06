@@ -18,6 +18,7 @@ public class TextManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+        DontDestroyOnLoad(gameObject);
     }
     
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class TextManager : MonoBehaviour
         if (!System.Object.ReferenceEquals(GameObject.Find("LivesText"), null)) {
             livesTMP = GameObject.Find("LivesText").GetComponent<TextMeshProUGUI>();
         } else {
-            Debug.Log("TextManager : CAN'T FIND LIVES TEXT");
+            Debug.LogWarning("TextManager : CAN'T FIND LIVES TEXT");
         }
     }
 

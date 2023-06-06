@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+        DontDestroyOnLoad(gameObject);
     }   
 
     // Start is called before the first frame update
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
 
 
 
-
+        // TEMPORARY SLOW DOWN ABILITY IN
         if (Input.GetKey(KeyCode.Space)) {
             DoSlowMotion();
         } else {

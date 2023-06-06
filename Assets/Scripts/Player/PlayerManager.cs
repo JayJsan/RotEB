@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+        DontDestroyOnLoad(gameObject);
     }   
 
     // Start is called before the first frame update
@@ -47,38 +48,28 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    #region LIVES AND RESPAWN
     public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
-    public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
-    public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
+
     public void DecreasePlayerLives(int amount) { 
         m_playerStats.DecreasePlayerLives(amount); 
         if (GetPlayerLives() == 0) {
             GameManager.Instance.SetGameState(StateType.GAMEOVER);
         }
     }
-    
+
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
     }
-
+    
     public void RespawnPlayer(Vector3 respawnPosition) {
         m_player.transform.position = respawnPosition;
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
     }
-
-    public void DeactivatePlayer() {
-        m_player.SetActive(false);
-        m_player.GetComponent<CircleCollider2D>().enabled = false;
-    }
-
-    public void ReactivatePlayer() {
-        m_player.SetActive(true);
-        m_player.GetComponent<CircleCollider2D>().enabled = true;
-    }
-
+    
     private IEnumerator PlayerRespawning() {
         PlayerManager.Instance.DisablePlayerControl();
         int currentFlashes = 0;
@@ -97,6 +88,22 @@ public class PlayerManager : MonoBehaviour
         m_player.GetComponent<CircleCollider2D>().enabled = true;
         GameManager.Instance.SetGameState(StateType.PLAYERTURN);
         TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
+    }
+    #endregion
+
+    #region PLAYER INPUT
+    public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
+    public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
+    #endregion
+
+    public void DeactivatePlayer() {
+        m_player.SetActive(false);
+        m_player.GetComponent<CircleCollider2D>().enabled = false;
+    }
+
+    public void ReactivatePlayer() {
+        m_player.SetActive(true);
+        m_player.GetComponent<CircleCollider2D>().enabled = true;
     }
 
     public GameObject GetNearestPocketToPlayer() {
