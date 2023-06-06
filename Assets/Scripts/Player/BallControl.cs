@@ -127,8 +127,14 @@ public class BallControl : MonoBehaviour
         }
     
     }
-    public void EnableBallControls() { isEnabled = true; }
+    public void EnableBallControls() { 
+        isEnabled = true; 
+    }
 
-    public void DisableBallControls() { isEnabled = false; }
+    public void DisableBallControls() { 
+        isEnabled = false; 
+        m_playerLineRenderer.enabled = false;
+        m_trajectoryLineRenderer.enabled = false;        
+    }
 
 }
