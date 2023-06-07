@@ -22,7 +22,18 @@ public class BallControl : MonoBehaviour
     // Start is called before the first frame update
     void Awake() {
         m_playerLineRenderer = GetComponent<LineRenderer>();
-        m_trajectoryLineRenderer = GetComponentInChildren<LineRenderer>(true);
+
+        LineRenderer[] lineRenderers = GetComponentsInChildren<LineRenderer>(true);
+
+        foreach (LineRenderer lr in lineRenderers) {
+            if (lr.CompareTag("TrajectoryLine")) {
+                m_trajectoryLineRenderer = lr;
+            }
+        }
+        if (m_trajectoryLineRenderer == null) {
+            Debug.LogWarning("BallControl could not find the TrajectoryLine component!");
+        }
+        
     }
 
     void Start()

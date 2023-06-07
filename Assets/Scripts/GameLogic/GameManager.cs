@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
 
             // Initial player respawn
             case StateType.PLAYER_RESPAWN:
-                PlayerManager.Instance.DisablePlayerControl();
                 PlayerManager.Instance.RespawnPlayer();
                 UpdateGameState(StateType.PLAYER_RESPAWNING);
             break;
@@ -102,7 +101,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        PlayerManager.Instance.ReactivatePlayer();
         PlayerManager.Instance.SetPlayerLives(3);
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
         UpdateGameState(StateType.PLAYER_RESPAWN);

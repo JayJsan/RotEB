@@ -16,12 +16,20 @@ public class EnemyAI : MonoBehaviour
     public float forceMultiplier = 1f;
     private bool inCooldown = false;
 
+    void Awake() {
+        rb2D = GetComponent<Rigidbody2D>();
+        cc2D = GetComponent<CircleCollider2D>();
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         cc2D = GetComponent<CircleCollider2D>();
-        StartCoroutine(Cooldown());
+    }
+
+    private void OnEnable() {
+        StartCoroutine(Cooldown(5f));
     }
 
     // Update is called once per frame
@@ -31,23 +39,29 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
-
         if ((!inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
-            StartCoroutine(Cooldown());
+            StartCoroutine(AttackCooldown());
         }
     }
 
-    private IEnumerator Cooldown() {
+    private IEnumerator AttackCooldown() {
         inCooldown = true;
         GetAngleToHitPlayer();
         yield return new WaitForSeconds(Random.Range(1f, 10f));
         inCooldown = false;
     }
 
+    private IEnumerator Cooldown(float cooldownTime) {
+        inCooldown = true;
+        yield return new WaitForSeconds(cooldownTime);
+        inCooldown = false;
+    }
+
+
 
     private void GetAngleToHitPlayer() {
         Transform playerTransform = PlayerManager.Instance.GetPlayerTransform();
+        m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
         Transform closestPocketTransform = m_closestPocket.transform;
 
 
