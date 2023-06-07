@@ -456,7 +456,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueEnemiesToSpawn:
-  - {fileID: 1607187022241155047, guid: 0e76cc9c1dde38f4b926434cb539f2bf, type: 3}
+  - {fileID: 242746038425695876, guid: 077ab1c667bef594f8a98f6510b34225, type: 3}
+  - {fileID: 340961216084062880, guid: ffe7550dab88c994f88fca44bb751aac, type: 3}
+  - {fileID: 267810592264597678, guid: d632028c9fcac4942b8db9a053a3f13b, type: 3}
+  - {fileID: 5291906174632286538, guid: 7d931a964846645488966ae3f4d7440e, type: 3}
+  - {fileID: 6397187636517174781, guid: e02f7070a4c99cd40a9c51255a2767b6, type: 3}
+  - {fileID: 7007108448997859473, guid: e059c32e22253b94cb1d22d8f4108220, type: 3}
+  - {fileID: 4327800150697475959, guid: 1cd6df47d340a1849a5e158187f2745f, type: 3}
+  - {fileID: 588577496020964395, guid: ab3a61e6b3043b94fac5af0b7b1e3523, type: 3}
   currentEnemiesAlive: []
 --- !u!4 &129597088
 Transform:
