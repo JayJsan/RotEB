@@ -11,6 +11,7 @@ public enum StateType {
     PLAYER_SUNK,   // Player has been sunk.
     BUYING,       // Buying something new
     GAME_OVER,
+    GAME_WIN,
     GAME_START,
     PAUSE_MENU,     // Player is viewing in-game menu
     MAIN_MENU       // SCENE IS IN MAIN MENU

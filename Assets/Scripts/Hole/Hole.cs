@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoleFunctionality : MonoBehaviour
+public class Hole : MonoBehaviour
 {
     private CircleCollider2D m_circleCollider2D;
-    private bool hasEntered = false;
+    private bool m_hasEntered = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,7 @@ public class HoleFunctionality : MonoBehaviour
         collider.enabled = false;
         
 
-        if (!hasEntered) {
+        if (!m_hasEntered) {
             Debug.Log(collidedObject.name + " has fallened into the " + this.name +"!");
             switch (collidedObject.tag) {
                 case "Player":
@@ -37,12 +37,12 @@ public class HoleFunctionality : MonoBehaviour
                 break;
             }
             m_circleCollider2D.enabled = true;
-            hasEntered = true;
+            m_hasEntered = true;
         }
     }
     
     private void OnTriggerExit2D(Collider2D collider) {
-        hasEntered = false;
+        m_hasEntered = false;
         m_circleCollider2D.enabled = true;
     }
 
@@ -56,5 +56,6 @@ public class HoleFunctionality : MonoBehaviour
     private void SunkEnemy(GameObject enemy) {
         Debug.Log("Enemy sunk!");
         enemy.SetActive(false);
+        EnemyManager.Instance.CheckEnemiesAlive();
     }
 }

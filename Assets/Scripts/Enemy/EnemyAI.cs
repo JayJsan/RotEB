@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     // 7/06/23 - NEED TO IMPROVE 
+    // - ENEMY FORCE GETS STRONGER THE FARTHER THE PLAYER IS (which is cool but should be clamped)
+    // - ENEMY FORCE TOO SMALL WHEN TOO CLOSE TO PLAYER
     private GameObject m_closestPocket;
     private Rigidbody2D rb2D;
     private CircleCollider2D cc2D;

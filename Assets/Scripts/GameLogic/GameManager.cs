@@ -80,6 +80,12 @@ public class GameManager : MonoBehaviour
                 PlayerManager.Instance.DeactivatePlayer();
                 CanvasManager.Instance.SwitchCanvas(CanvasType.EndScreen);
             break;
+
+            case StateType.GAME_WIN:
+                PlayerManager.Instance.DisablePlayerControl();
+                CanvasManager.Instance.SwitchCanvas(CanvasType.WinScreen);
+            break;
+
             default:
 
             break;
@@ -102,6 +108,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame() {
         PlayerManager.Instance.SetPlayerLives(3);
+        EnemyManager.Instance.ClearAllEnemies();
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
         UpdateGameState(StateType.PLAYER_RESPAWN);
     }

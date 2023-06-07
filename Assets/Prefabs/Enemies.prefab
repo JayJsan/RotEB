@@ -151,7 +151,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142689424992959
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142689855380448
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142689951236211
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +607,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142690001065330
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +759,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142690824409830
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +911,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 1
+  forceMultiplier: 5
 --- !u!1 &1264142691068280618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,7 +1063,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1264142691141263727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,7 +1215,7 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 10
+  forceMultiplier: 5
 --- !u!1 &1607187022241155047
 GameObject:
   m_ObjectHideFlags: 0
