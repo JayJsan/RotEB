@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CanvasSwitcher : MonoBehaviour
 {
     //public ButtonType buttonType;
-    public CanvasType desiredcanvasType;
+    public CanvasType desiredCanvasType;
     Button button;
 
     // Start is called before the first frame update
@@ -18,6 +18,6 @@ public class CanvasSwitcher : MonoBehaviour
     }
 
     void OnButtonClicked() {
-        CanvasManager.Instance.SwitchCanvas(desiredcanvasType);
+        CanvasManager.Instance.SwitchCanvas(desiredCanvasType);
     }
 }

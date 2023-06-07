@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // 7/06/23 - NEED TO IMPROVE 
     public static GameManager Instance { get; private set; }
     private StateType m_currentGameState = StateType.DEFAULT;
     public GameObject panel;
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
             break;
 
             case StateType.GAME_OVER:
+                PlayerManager.Instance.DeactivatePlayer();
                 CanvasManager.Instance.SwitchCanvas(CanvasType.EndScreen);
             break;
             default:
@@ -100,7 +102,10 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-
+        PlayerManager.Instance.ReactivatePlayer();
+        PlayerManager.Instance.SetPlayerLives(3);
+        EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
+        UpdateGameState(StateType.PLAYER_RESPAWN);
     }
 
     public bool IsGameStateThis(StateType stateType) {

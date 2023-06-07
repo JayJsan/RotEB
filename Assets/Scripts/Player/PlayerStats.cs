@@ -26,6 +26,16 @@ public class PlayerStats : MonoBehaviour
             TextManager.Instance.UpdateLivesTextAmount(m_playerLives);
         }
     }
+
+    public void IncreasePlayerLives(int amount) {
+        m_playerLives = m_playerLives + amount;
+        TextManager.Instance.UpdateLivesTextAmount(m_playerLives);
+    }
+
+    public void SetPlayerLives(int amount) {
+        m_playerLives = amount;
+    }
+
     public int GetPlayerLives() {
         return m_playerLives;
     }

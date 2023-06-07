@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    // 7/06/23 - NEED TO IMPROVE 
     private GameObject m_closestPocket;
     private Rigidbody2D rb2D;
     private CircleCollider2D cc2D;
@@ -20,7 +21,7 @@ public class EnemyAI : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         cc2D = GetComponent<CircleCollider2D>();
-
+        StartCoroutine(Cooldown());
     }
 
     // Update is called once per frame
@@ -33,16 +34,17 @@ public class EnemyAI : MonoBehaviour
         m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
 
         if ((!inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
-            StartCoroutine(Cooldowm());
+            StartCoroutine(Cooldown());
         }
     }
 
-    private IEnumerator Cooldowm() {
+    private IEnumerator Cooldown() {
         inCooldown = true;
         GetAngleToHitPlayer();
         yield return new WaitForSeconds(Random.Range(1f, 10f));
         inCooldown = false;
     }
+
 
     private void GetAngleToHitPlayer() {
         Transform playerTransform = PlayerManager.Instance.GetPlayerTransform();

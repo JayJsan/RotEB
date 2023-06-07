@@ -38,7 +38,6 @@ public class CanvasManager : MonoBehaviour
         if (desiredCanvas != null) {
             desiredCanvas.gameObject.SetActive(true);
             m_lastActiveCanvas = desiredCanvas;
-        } else { Debug.LogWarning("The " + type +" canvas was not found!");}
-
+        } else { Debug.LogWarning("The " + type + " canvas was not found!");}
     }
 }

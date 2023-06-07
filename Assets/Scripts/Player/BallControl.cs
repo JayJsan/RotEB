@@ -5,6 +5,7 @@ using UnityEngine;
 // Code taken and modified from https://youtu.be/-cEFB5prG3Y
 public class BallControl : MonoBehaviour
 {
+    // 7/06/23 - NEED TO IMPROVE 
     public Material material;
     public float startWidth = 0.2f;
     public float endWidth = 0.0f;
@@ -19,6 +20,11 @@ public class BallControl : MonoBehaviour
     private bool isEnabled = true;
 
     // Start is called before the first frame update
+    void Awake() {
+        m_playerLineRenderer = GetComponent<LineRenderer>();
+        m_trajectoryLineRenderer = GetComponentInChildren<LineRenderer>(true);
+    }
+
     void Start()
     {
         m_rb2D = GetComponent<Rigidbody2D>();

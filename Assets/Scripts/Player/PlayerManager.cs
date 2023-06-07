@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject m_player;
     [SerializeField]
+    private GameObject m_playerPrefab;
+    [SerializeField]
     private PlayerStats m_playerStats;
     [SerializeField]
     private BallControl m_playerControl;
@@ -30,7 +32,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-        
+        m_player = Instantiate(m_playerPrefab, Vector3.zero, Quaternion.identity);
         if (!System.Object.ReferenceEquals(GameObject.FindGameObjectWithTag("Player"), null)) {
             m_player = GameObject.FindGameObjectWithTag("Player");
             m_playerStats = m_player.GetComponent<PlayerStats>();
@@ -38,7 +40,7 @@ public class PlayerManager : MonoBehaviour
         } else {
             Debug.Log("Player Missing!");
         }
-
+        m_player.SetActive(false);
         m_pockets = GameObject.FindGameObjectsWithTag("Pocket");
     }
 
@@ -53,6 +55,14 @@ public class PlayerManager : MonoBehaviour
 
     public void DecreasePlayerLives(int amount) { 
         m_playerStats.DecreasePlayerLives(amount); 
+    }
+
+    public void IncreasePlayerLives(int amount) {
+        m_playerStats.IncreasePlayerLives(amount);
+    }
+
+    public void SetPlayerLives(int amount) {
+        m_playerStats.SetPlayerLives(amount);
     }
 
     public void RespawnPlayer() {
