@@ -5,6 +5,7 @@ using UnityEngine;
 // Code taken and modified from https://youtu.be/-cEFB5prG3Y
 public class BallControl : MonoBehaviour
 {
+    // 7/06/23 - NEED TO IMPROVE 
     public Material material;
     public float startWidth = 0.2f;
     public float endWidth = 0.0f;
@@ -19,6 +20,22 @@ public class BallControl : MonoBehaviour
     private bool isEnabled = true;
 
     // Start is called before the first frame update
+    void Awake() {
+        m_playerLineRenderer = GetComponent<LineRenderer>();
+
+        LineRenderer[] lineRenderers = GetComponentsInChildren<LineRenderer>(true);
+
+        foreach (LineRenderer lr in lineRenderers) {
+            if (lr.CompareTag("TrajectoryLine")) {
+                m_trajectoryLineRenderer = lr;
+            }
+        }
+        if (m_trajectoryLineRenderer == null) {
+            Debug.LogWarning("BallControl could not find the TrajectoryLine component!");
+        }
+        
+    }
+
     void Start()
     {
         m_rb2D = GetComponent<Rigidbody2D>();
@@ -127,8 +144,14 @@ public class BallControl : MonoBehaviour
         }
     
     }
-    public void EnableBallControls() { isEnabled = true; }
+    public void EnableBallControls() { 
+        isEnabled = true; 
+    }
 
-    public void DisableBallControls() { isEnabled = false; }
+    public void DisableBallControls() { 
+        isEnabled = false; 
+        m_playerLineRenderer.enabled = false;
+        m_trajectoryLineRenderer.enabled = false;        
+    }
 
 }

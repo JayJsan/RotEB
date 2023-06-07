@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    // 7/06/23 - NEED TO IMPROVE 
+    // - ENEMY FORCE GETS STRONGER THE FARTHER THE PLAYER IS (which is cool but should be clamped)
+    // - ENEMY FORCE TOO SMALL WHEN TOO CLOSE TO PLAYER
     private GameObject m_closestPocket;
     private Rigidbody2D rb2D;
     private CircleCollider2D cc2D;
@@ -11,13 +14,24 @@ public class EnemyAI : MonoBehaviour
     private ContactFilter2D contactPredictionFilter;
 
     public Vector3 angleAdjustment = Vector3.zero;
+
+    public float forceMultiplier = 1f;
     private bool inCooldown = false;
+
+    void Awake() {
+        rb2D = GetComponent<Rigidbody2D>();
+        cc2D = GetComponent<CircleCollider2D>();
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         cc2D = GetComponent<CircleCollider2D>();
+    }
 
+    private void OnEnable() {
+        StartCoroutine(Cooldown(5f));
     }
 
     // Update is called once per frame
@@ -27,22 +41,29 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
-
-        if (!inCooldown) {
-            StartCoroutine(Cooldowm());
+        if ((!inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
+            StartCoroutine(AttackCooldown());
         }
     }
 
-    private IEnumerator Cooldowm() {
+    private IEnumerator AttackCooldown() {
         inCooldown = true;
         GetAngleToHitPlayer();
         yield return new WaitForSeconds(Random.Range(1f, 10f));
         inCooldown = false;
     }
 
+    private IEnumerator Cooldown(float cooldownTime) {
+        inCooldown = true;
+        yield return new WaitForSeconds(cooldownTime);
+        inCooldown = false;
+    }
+
+
+
     private void GetAngleToHitPlayer() {
         Transform playerTransform = PlayerManager.Instance.GetPlayerTransform();
+        m_closestPocket = PlayerManager.Instance.GetNearestPocketToPlayer();
         Transform closestPocketTransform = m_closestPocket.transform;
 
 
@@ -117,6 +138,7 @@ public class EnemyAI : MonoBehaviour
             // If so, set closestDirectionTowardsPlayerBallToHitPlayerIntoPocket to currentPrediction.
         }
         //Debug.DrawLine(transform.position, closestDirectionTowardsPlayerBallToHitPlayerIntoPocket, Color.yellow, 2f);
-        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f, ForceMode2D.Impulse);
+        rb2D.velocity = Vector2.zero;
+        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f * forceMultiplier, ForceMode2D.Impulse);
     }
 }

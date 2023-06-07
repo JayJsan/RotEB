@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject m_player;
     [SerializeField]
+    private GameObject m_playerPrefab;
+    [SerializeField]
     private PlayerStats m_playerStats;
     [SerializeField]
     private BallControl m_playerControl;
@@ -23,13 +25,14 @@ public class PlayerManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+        DontDestroyOnLoad(gameObject);
     }   
 
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
-        
+        m_player = Instantiate(m_playerPrefab, Vector3.zero, Quaternion.identity);
         if (!System.Object.ReferenceEquals(GameObject.FindGameObjectWithTag("Player"), null)) {
             m_player = GameObject.FindGameObjectWithTag("Player");
             m_playerStats = m_player.GetComponent<PlayerStats>();
@@ -37,7 +40,7 @@ public class PlayerManager : MonoBehaviour
         } else {
             Debug.Log("Player Missing!");
         }
-
+        m_player.SetActive(false);
         m_pockets = GameObject.FindGameObjectsWithTag("Pocket");
     }
 
@@ -47,36 +50,31 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    #region LIVES AND RESPAWN
     public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
-    public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
-    public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
+
     public void DecreasePlayerLives(int amount) { 
         m_playerStats.DecreasePlayerLives(amount); 
-        if (GetPlayerLives() == 0) {
-            GameManager.Instance.SetGameState(StateType.GAMEOVER);
-        }
     }
-    
+
+    public void IncreasePlayerLives(int amount) {
+        m_playerStats.IncreasePlayerLives(amount);
+    }
+
+    public void SetPlayerLives(int amount) {
+        m_playerStats.SetPlayerLives(amount);
+    }
+
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
     }
-
+    
     public void RespawnPlayer(Vector3 respawnPosition) {
         m_player.transform.position = respawnPosition;
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
-    }
-
-    public void DeactivatePlayer() {
-        m_player.SetActive(false);
-        m_player.GetComponent<CircleCollider2D>().enabled = false;
-    }
-
-    public void ReactivatePlayer() {
-        m_player.SetActive(true);
-        m_player.GetComponent<CircleCollider2D>().enabled = true;
     }
 
     private IEnumerator PlayerRespawning() {
@@ -84,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         int currentFlashes = 0;
         int maxFlashes = 4;
         string livesText = "Respawning";
+        m_player.GetComponent<CircleCollider2D>().enabled = false;
         while (currentFlashes < maxFlashes) {
             TextManager.Instance.UpdateLivesTextStatus(livesText);
             livesText = livesText + ".";
@@ -93,8 +92,29 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             currentFlashes++;
         }
-        GameManager.Instance.SetGameState(StateType.PLAYERTURN);
+        m_player.GetComponent<CircleCollider2D>().enabled = true;
         TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
+        if (PlayerManager.Instance.GetPlayerLives() == 0) {
+            GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
+        } else {
+            GameManager.Instance.UpdateGameState(StateType.PLAYER_TURN);
+        }
+    }
+    #endregion
+
+    #region PLAYER INPUT
+    public void EnablePlayerControl() { m_playerControl.EnableBallControls(); }
+    public void DisablePlayerControl() { m_playerControl.DisableBallControls(); } 
+    #endregion
+
+    public void DeactivatePlayer() {
+        m_player.SetActive(false);
+        m_player.GetComponent<CircleCollider2D>().enabled = false;
+    }
+
+    public void ReactivatePlayer() {
+        m_player.SetActive(true);
+        m_player.GetComponent<CircleCollider2D>().enabled = true;
     }
 
     public GameObject GetNearestPocketToPlayer() {
