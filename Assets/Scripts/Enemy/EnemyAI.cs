@@ -139,6 +139,6 @@ public class EnemyAI : MonoBehaviour
         }
         //Debug.DrawLine(transform.position, closestDirectionTowardsPlayerBallToHitPlayerIntoPocket, Color.yellow, 2f);
         rb2D.velocity = Vector2.zero;
-        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket * 3f * forceMultiplier, ForceMode2D.Impulse);
+        rb2D.AddForce(closestDirectionTowardsPlayerBallToHitPlayerIntoPocket.normalized * forceMultiplier, ForceMode2D.Impulse);
     }
 }

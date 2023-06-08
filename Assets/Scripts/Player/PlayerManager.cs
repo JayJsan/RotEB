@@ -67,6 +67,7 @@ public class PlayerManager : MonoBehaviour
 
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
+        m_player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         ReactivatePlayer();
         StartCoroutine(PlayerRespawning());
     }
