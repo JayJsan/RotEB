@@ -37,8 +37,12 @@ public class TextManager : MonoBehaviour
         
     }
 
-    public void UpdateLivesTextAmount(int amount) {
+    public void ChangeLivesTextAmount(int amount) {
         livesTMP.text = "Lives : " + amount;
+    }
+
+    public void UpdateLivesTextAmount() {
+        livesTMP.text = "Lives : " + PlayerStatManager.Instance.GetPlayerLives();
     }
 
     public void UpdateLivesTextStatus(string status) {

@@ -53,18 +53,6 @@ public class PlayerManager : MonoBehaviour
     #region LIVES AND RESPAWN
     public int GetPlayerLives() { return m_playerStats.GetPlayerLives(); }
 
-    public void DecreasePlayerLives(int amount) { 
-        m_playerStats.DecreasePlayerLives(amount); 
-    }
-
-    public void IncreasePlayerLives(int amount) {
-        m_playerStats.IncreasePlayerLives(amount);
-    }
-
-    public void SetPlayerLives(int amount) {
-        m_playerStats.SetPlayerLives(amount);
-    }
-
     public void RespawnPlayer() {
         m_player.transform.position = new Vector3 (-3,0,0);
         m_player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -94,7 +82,7 @@ public class PlayerManager : MonoBehaviour
             currentFlashes++;
         }
         m_player.GetComponent<CircleCollider2D>().enabled = true;
-        TextManager.Instance.UpdateLivesTextAmount(GetPlayerLives());
+        TextManager.Instance.UpdateLivesTextAmount();
         if (PlayerManager.Instance.GetPlayerLives() == 0) {
             GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
         } else {
@@ -137,5 +125,9 @@ public class PlayerManager : MonoBehaviour
 
     public Transform GetPlayerTransform() {
         return m_player.transform;
+    }
+
+    public GameObject GetPlayerGameObject() {
+        return m_player;
     }
 }

@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        PlayerManager.Instance.SetPlayerLives(3);
+        PlayerStatManager.Instance.SetPlayerLives(3);
         EnemyManager.Instance.ClearAllEnemies();
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
         UpdateGameState(StateType.PLAYER_RESPAWN);

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractBallStatManager : MonoBehaviour
+public abstract class AbstractStatManager : MonoBehaviour
 {
     // 8/06/23 - NEED TO IMPROVE 
-    public static AbstractBallStatManager Instance { get; private set; }
+    private static AbstractStatManager Instance { get; set; }
     protected float m_totalAttackSpeedFromItems;
     protected float m_totalMaxShootForceFromItems;
     protected float m_totalAccuracyFromItems;

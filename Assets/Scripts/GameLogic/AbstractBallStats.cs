@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractBallStats
+public abstract class AbstractBallStats : MonoBehaviour
 {
     #region CURRENT STATS
     protected float m_currentAttackSpeed = 1f; // The rate the ball can be shot per second.
