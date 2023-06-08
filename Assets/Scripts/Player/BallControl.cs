@@ -17,7 +17,8 @@ public class BallControl : MonoBehaviour
     private LineRenderer m_trajectoryLineRenderer;
     private Rigidbody2D m_rb2D;
     private Vector3 m_initialMousePosition;
-    private bool isEnabled = true;
+    private bool m_isEnabled = true;
+    private bool m_inCooldown = false;
 
     // Start is called before the first frame update
     void Awake() {
@@ -54,11 +55,15 @@ public class BallControl : MonoBehaviour
         SetupPlayerLineControl();
         SetupGuideLine();
     }
+    
+    private void OnEnable() {
+        m_inCooldown = false;    
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnabled) {
+        if (m_isEnabled && !m_inCooldown) {
             HandleBallInput();
         }
     }
@@ -139,21 +144,37 @@ public class BallControl : MonoBehaviour
                 PlayerStatManager.Instance.GetCurrentMaxShootPower());
 
             m_rb2D.AddForce(playerShootPower, ForceMode2D.Impulse);
-            
+
             // ---- Player Control Line -----
             Debug.Log("Force Applied: " + inputForce);
             // ----     Guide Line      -----
             m_trajectoryLineRenderer.enabled = false;
             // ----     Guide Line      -----
-        }
-    
+            StartCoroutine(Reload());
+        } 
     }
     public void EnableBallControls() { 
-        isEnabled = true; 
+        m_isEnabled = true; 
+    }
+
+    public IEnumerator Reload() {
+        m_inCooldown = true;
+        SpriteRenderer playerSprite = PlayerManager.Instance.GetPlayerGameObject().GetComponent<SpriteRenderer>();
+        // Since attack speed is attacks per second. Seconds to wait is 1 / attacks per second
+        float secondsToWait = 1f / PlayerStatManager.Instance.GetCurrentAttackSpeed();
+
+        playerSprite.color = Color.black;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = Color.gray;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = new Color(0.75f, 0.75f, 0.75f, 1);
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = Color.white;
+        m_inCooldown = false;
     }
 
     public void DisableBallControls() { 
-        isEnabled = false; 
+        m_isEnabled = false; 
         m_playerLineRenderer.enabled = false;
         m_trajectoryLineRenderer.enabled = false;        
     }
