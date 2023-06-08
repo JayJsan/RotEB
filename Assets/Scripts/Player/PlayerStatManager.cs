@@ -25,7 +25,7 @@ public class PlayerStatManager : AbstractStatManager
         m_playerStats = PlayerManager.Instance.GetPlayerGameObject().GetComponent<PlayerStats>();
     }
 
-
+    
     public override void ModifyAttackSpeed(float newAttackSpeed) {
 
     }
@@ -39,7 +39,9 @@ public class PlayerStatManager : AbstractStatManager
     }
 
     public override void CalculateTotalStatsFromItems() {
-
+        m_totalAttackSpeedFromItems = 0;
+        m_totalMaxShootForceFromItems = 0;
+        m_totalAccuracyFromItems = 0;
     }
 
     public void DecreasePlayerLives(int amount) {
