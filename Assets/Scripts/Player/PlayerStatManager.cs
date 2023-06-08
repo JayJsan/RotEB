@@ -27,21 +27,29 @@ public class PlayerStatManager : AbstractStatManager
 
     
     public override void ModifyAttackSpeed(float newAttackSpeed) {
-
+        m_playerStats.SetCurrentAttackSpeed(newAttackSpeed);
     }
 
     public override void ModifyMaxShootPower(float newMaxShootPower) {
-
+        m_playerStats.SetCurrentMaxShootPower(newMaxShootPower);
     }
 
     public override void ModifyAccuracy(float newAccuracy) {
-
+        m_playerStats.SetCurrentAccuracy(newAccuracy);
     }
 
     public override void CalculateTotalStatsFromItems() {
-        m_totalAttackSpeedFromItems = 0;
-        m_totalMaxShootForceFromItems = 0;
-        m_totalAccuracyFromItems = 0;
+        // CHANGE WHEN ITEMS ARE IMPLEMENTED
+        m_totalAttackSpeedFromItems = 2;
+        m_totalMaxShootForceFromItems = 200;
+        m_totalAccuracyFromItems = 100;
+    }
+
+    public void UpdateAllStats() {
+        CalculateTotalStatsFromItems();
+        ModifyAttackSpeed(m_totalAttackSpeedFromItems);
+        ModifyMaxShootPower(m_totalMaxShootForceFromItems);
+        ModifyAccuracy(m_totalAccuracyFromItems);
     }
 
     public void DecreasePlayerLives(int amount) {
@@ -66,5 +74,15 @@ public class PlayerStatManager : AbstractStatManager
 
     public void SetPlayerLives(int amount) {
         m_playerStats.SetPlayerLives(amount);
+    }
+
+    public float GetCurrentAttackSpeed() {
+        return m_playerStats.GetCurrentAttackSpeed();
+    }
+    public float GetCurrentMaxShootPower() {
+        return m_playerStats.GetCurrentMaxShootPower();
+    }
+     public float GetCurrentAccuracy() {
+        return m_playerStats.GetCurrentAccuracy();
     }
 }
