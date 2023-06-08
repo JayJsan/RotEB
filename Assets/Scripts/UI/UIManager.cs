@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class TextManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public static TextManager Instance { get; private set; }
+    public static UIManager Instance { get; private set; }
     [SerializeField]
     private TextMeshProUGUI livesTMP;
 
@@ -37,6 +37,7 @@ public class TextManager : MonoBehaviour
         
     }
 
+    #region LIVES
     public void ChangeLivesTextAmount(int amount) {
         livesTMP.text = "Lives : " + amount;
     }
@@ -48,4 +49,9 @@ public class TextManager : MonoBehaviour
     public void UpdateLivesTextStatus(string status) {
         livesTMP.text = "Lives : " + status;
     }
+    #endregion
+
+    #region ITEMS
+
+    #endregion
 }

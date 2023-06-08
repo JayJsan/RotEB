@@ -73,7 +73,7 @@ public class PlayerManager : MonoBehaviour
         string livesText = "Respawning";
         m_player.GetComponent<CircleCollider2D>().enabled = false;
         while (currentFlashes < maxFlashes) {
-            TextManager.Instance.UpdateLivesTextStatus(livesText);
+            UIManager.Instance.UpdateLivesTextStatus(livesText);
             livesText = livesText + ".";
             m_player.GetComponent<SpriteRenderer>().color = Color.clear;
             yield return new WaitForSeconds(0.2f);
@@ -82,7 +82,7 @@ public class PlayerManager : MonoBehaviour
             currentFlashes++;
         }
         m_player.GetComponent<CircleCollider2D>().enabled = true;
-        TextManager.Instance.UpdateLivesTextAmount();
+        UIManager.Instance.UpdateLivesTextAmount();
         if (PlayerManager.Instance.GetPlayerLives() == 0) {
             GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
         } else {

@@ -23,7 +23,7 @@ public class CanvasManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Find Canavs Controllers
-        m_canvasControllers = GetComponentsInChildren<CanvasController>().ToList();
+        m_canvasControllers = GetComponentsInChildren<CanvasController>(true).ToList();
         m_canvasControllers.ForEach(x => x.gameObject.SetActive(false));
         SwitchCanvas(CanvasType.MainMenu);
     }

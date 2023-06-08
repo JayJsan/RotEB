@@ -6,7 +6,7 @@ public enum CanvasType {
     MainMenu,      // GameUI Container
     GameUI,   // MainMenu UI Container
     EndScreen,   // EndScreen UI Container
-
+    ShopScreen, // ShopScreen UI Container
     WinScreen, // WinScreen UI Container
 }
 
