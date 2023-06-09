@@ -19,6 +19,8 @@ public class BallControl : MonoBehaviour
     private Vector3 m_initialMousePosition;
     private bool m_isEnabled = true;
     private bool m_inCooldown = false;
+    bool buttonClicked = false;
+    bool buttonDown = false;
 
     // Start is called before the first frame update
     void Awake() {
@@ -96,6 +98,8 @@ public class BallControl : MonoBehaviour
     }
 
     private void HandleBallInput() {
+        // Ensures that the other statements are only executed if the first if statement is executed
+
         if (Input.GetMouseButtonDown(0)) {
             // ---- Player Control Line -----
             m_initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -113,10 +117,10 @@ public class BallControl : MonoBehaviour
             m_trajectoryLineRenderer.enabled = true;
             // ----     Guide Line      -----
 
-            
+            buttonClicked = true;
         }
 
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && buttonClicked) {
             // ---- Player Control Line -----
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             currentMousePosition.z = 0;
@@ -133,9 +137,12 @@ public class BallControl : MonoBehaviour
             m_trajectoryLineRenderer.SetPosition(1, trajectoryEndPos);
 
             // ----     Guide Line      -----
+            buttonDown = true;
+        } else {
+            buttonClicked = false;
         }
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && buttonDown) {
             // ---- Player Control Line -----
             m_playerLineRenderer.enabled = false;
             Vector3 inputForce = m_playerLineRenderer.GetPosition(0) - m_playerLineRenderer.GetPosition(1);
@@ -150,6 +157,8 @@ public class BallControl : MonoBehaviour
             // ----     Guide Line      -----
             m_trajectoryLineRenderer.enabled = false;
             // ----     Guide Line      -----
+            buttonDown = false;
+            buttonClicked = false;
             StartCoroutine(Reload());
         } 
     }
