@@ -48,7 +48,7 @@ public class Hole : MonoBehaviour
 
     private void SunkPlayer() {
         Debug.Log("Player sunk!");
-        PlayerManager.Instance.DecreasePlayerLives(1);
+        PlayerStatManager.Instance.DecreasePlayerLives(1);
         PlayerManager.Instance.DeactivatePlayer();
         GameManager.Instance.UpdateGameState(StateType.PLAYER_SUNK);
     }

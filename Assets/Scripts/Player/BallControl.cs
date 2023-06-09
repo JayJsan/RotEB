@@ -17,7 +17,10 @@ public class BallControl : MonoBehaviour
     private LineRenderer m_trajectoryLineRenderer;
     private Rigidbody2D m_rb2D;
     private Vector3 m_initialMousePosition;
-    private bool isEnabled = true;
+    private bool m_isEnabled = true;
+    private bool m_inCooldown = false;
+    bool buttonClicked = false;
+    bool buttonDown = false;
 
     // Start is called before the first frame update
     void Awake() {
@@ -54,11 +57,15 @@ public class BallControl : MonoBehaviour
         SetupPlayerLineControl();
         SetupGuideLine();
     }
+    
+    private void OnEnable() {
+        m_inCooldown = false;    
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnabled) {
+        if (m_isEnabled && !m_inCooldown) {
             HandleBallInput();
         }
     }
@@ -91,6 +98,8 @@ public class BallControl : MonoBehaviour
     }
 
     private void HandleBallInput() {
+        // Ensures that the other statements are only executed if the first if statement is executed
+
         if (Input.GetMouseButtonDown(0)) {
             // ---- Player Control Line -----
             m_initialMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -108,10 +117,10 @@ public class BallControl : MonoBehaviour
             m_trajectoryLineRenderer.enabled = true;
             // ----     Guide Line      -----
 
-            
+            buttonClicked = true;
         }
 
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && buttonClicked) {
             // ---- Player Control Line -----
             Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             currentMousePosition.z = 0;
@@ -128,28 +137,53 @@ public class BallControl : MonoBehaviour
             m_trajectoryLineRenderer.SetPosition(1, trajectoryEndPos);
 
             // ----     Guide Line      -----
+            buttonDown = true;
+        } else {
+            buttonClicked = false;
         }
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && buttonDown) {
             // ---- Player Control Line -----
             m_playerLineRenderer.enabled = false;
             Vector3 inputForce = m_playerLineRenderer.GetPosition(0) - m_playerLineRenderer.GetPosition(1);
             m_rb2D.velocity = Vector2.zero;
-            m_rb2D.AddForce(inputForce * 1.5f, ForceMode2D.Impulse);
+            Vector3 playerShootPower = inputForce.normalized * 2f * Mathf.Clamp(inputForce.magnitude, 0, 
+                PlayerStatManager.Instance.GetCurrentMaxShootPower());
+
+            m_rb2D.AddForce(playerShootPower, ForceMode2D.Impulse);
+
             // ---- Player Control Line -----
             Debug.Log("Force Applied: " + inputForce);
             // ----     Guide Line      -----
             m_trajectoryLineRenderer.enabled = false;
             // ----     Guide Line      -----
-        }
-    
+            buttonDown = false;
+            buttonClicked = false;
+            StartCoroutine(Reload());
+        } 
     }
     public void EnableBallControls() { 
-        isEnabled = true; 
+        m_isEnabled = true; 
+    }
+
+    public IEnumerator Reload() {
+        m_inCooldown = true;
+        SpriteRenderer playerSprite = PlayerManager.Instance.GetPlayerGameObject().GetComponent<SpriteRenderer>();
+        // Since attack speed is attacks per second. Seconds to wait is 1 / attacks per second
+        float secondsToWait = 1f / PlayerStatManager.Instance.GetCurrentAttackSpeed();
+
+        playerSprite.color = Color.black;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = Color.gray;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = new Color(0.75f, 0.75f, 0.75f, 1);
+        yield return new WaitForSeconds(secondsToWait / 3);
+        playerSprite.color = Color.white;
+        m_inCooldown = false;
     }
 
     public void DisableBallControls() { 
-        isEnabled = false; 
+        m_isEnabled = false; 
         m_playerLineRenderer.enabled = false;
         m_trajectoryLineRenderer.enabled = false;        
     }

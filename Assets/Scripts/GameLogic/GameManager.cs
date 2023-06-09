@@ -86,6 +86,11 @@ public class GameManager : MonoBehaviour
                 CanvasManager.Instance.SwitchCanvas(CanvasType.WinScreen);
             break;
 
+            case StateType.SHOP_MENU:
+                PlayerManager.Instance.DeactivatePlayer();
+                CanvasManager.Instance.SwitchCanvas(CanvasType.ShopScreen);
+            break;
+
             default:
 
             break;
@@ -107,12 +112,18 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        PlayerManager.Instance.SetPlayerLives(3);
+        PlayerStatManager.Instance.SetPlayerLives(3);
         EnemyManager.Instance.ClearAllEnemies();
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
         UpdateGameState(StateType.PLAYER_RESPAWN);
     }
 
+    public void ContinueGame() {
+        EnemyManager.Instance.ClearAllEnemies();
+        EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
+        PlayerManager.Instance.ReactivatePlayer();
+    }
+    
     public bool IsGameStateThis(StateType stateType) {
         return stateType == m_currentGameState;
     }

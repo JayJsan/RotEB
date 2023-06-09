@@ -55,7 +55,7 @@ public class EnemyManager : MonoBehaviour
 
         if (enemiesAlive == 0) {
             Debug.Log("All enemies sunk!");
-            GameManager.Instance.UpdateGameState(StateType.GAME_WIN);
+            GameManager.Instance.UpdateGameState(StateType.SHOP_MENU);
         }
         
         return enemiesAlive;

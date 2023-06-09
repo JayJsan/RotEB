@@ -151,4 +151,4 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   angleAdjustment: {x: 0, y: 0, z: 0}
-  forceMultiplier: 5
+  forceMultiplier: 50
