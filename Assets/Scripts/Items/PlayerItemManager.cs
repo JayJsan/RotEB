@@ -79,7 +79,12 @@ public class PlayerItemManager : MonoBehaviour
         float randomSpeed = Random.Range(-2, 2);
         float randomPower = Random.Range(-50,50);
         float randomAccuracy = Random.Range(-100,100);
-        Item randomItem = new Item(randomSpeed, randomPower, randomAccuracy);
+        //Item randomItem = new Item(randomSpeed, randomPower, randomAccuracy);
+        Item randomItem = (Item)ScriptableObject.CreateInstance("Item");
+        randomItem.itemSpeed = randomSpeed;
+        randomItem.itemPower = randomPower;
+        randomItem.itemAccuracy = randomAccuracy;
+        
         m_equippedItems.Add(randomItem);
         PlayerStatManager.Instance.UpdateAllStats();
     }

@@ -8,8 +8,9 @@ public class ItemDebugEditor : Editor {
         base.OnInspectorGUI();
 
         PlayerItemManager itemManager = (PlayerItemManager)target;
-        if (GUILayout.Button("Generate Random Equipped Item")) {
 
+        if (GUILayout.Button("Generate Random Equipped Item")) {
+            itemManager.GenerateRandomEquippedItem();
         }
     }
 }

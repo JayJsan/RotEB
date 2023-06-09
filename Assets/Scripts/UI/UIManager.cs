@@ -10,8 +10,11 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     [SerializeField]
     private TextMeshProUGUI livesTMP;
+    [SerializeField]
     private TextMeshProUGUI speedTMP;
+    [SerializeField]    
     private TextMeshProUGUI powerTMP;
+    [SerializeField]    
     private TextMeshProUGUI accuracyTMP;
 
     private void Awake() {
@@ -30,6 +33,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // NEED A BETTER WAY TO GET OBJECTS BECAUSE IM JUST DRAGGING AND DROPPED REFERENCES IN THE EDITOR CURRENTLY
         if (!System.Object.ReferenceEquals(GameObject.Find("LivesText"), null)) {
             livesTMP = GameObject.Find("LivesText").GetComponent<TextMeshProUGUI>();
         } else {

@@ -27,15 +27,15 @@ public class PlayerStatManager : AbstractStatManager
 
     
     public override void ModifyAttackSpeed(float newAttackSpeed) {
-        m_playerStats.SetCurrentAttackSpeed(newAttackSpeed);
+        m_playerStats.AddNewAttackSpeed(newAttackSpeed);
     }
 
     public override void ModifyMaxShootPower(float newMaxShootPower) {
-        m_playerStats.SetCurrentMaxShootPower(newMaxShootPower);
+        m_playerStats.AddNewMaxShootPower(newMaxShootPower);
     }
 
     public override void ModifyAccuracy(float newAccuracy) {
-        m_playerStats.SetCurrentAccuracy(newAccuracy);
+        m_playerStats.AddNewAccuracy(newAccuracy);
     }
 
     public override void GetStatsFromItems() {

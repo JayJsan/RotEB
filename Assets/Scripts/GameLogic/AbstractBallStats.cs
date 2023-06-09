@@ -46,6 +46,19 @@ public abstract class AbstractBallStats : MonoBehaviour
         m_currentAccuracy = newAccuracy;
     }
 
+    public virtual void AddNewAttackSpeed(float newAttackSpeed) {
+        m_currentAttackSpeed = m_baseAttackSpeed + newAttackSpeed;
+    }
+
+    public virtual void AddNewMaxShootPower(float newMaxShootPower) {
+        m_currentMaxShootPower = m_currentMaxShootPower + newMaxShootPower;
+    }
+
+    public virtual void AddNewAccuracy(float newAccuracy) {
+        m_currentAccuracy = m_baseAccuracy + newAccuracy;
+    }
+
+
     /// <summary>
     /// Resets the attackSpeed to the base speed
     /// 
