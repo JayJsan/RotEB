@@ -76,7 +76,7 @@ public class PlayerItemManager : MonoBehaviour
     // DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- 
     // DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- 
     public void GenerateRandomEquippedItem() {
-        float randomSpeed = Random.Range(-2, 2);
+        float randomSpeed = Random.Range(-2, 10);
         float randomPower = Random.Range(-50,50);
         float randomAccuracy = Random.Range(-100,100);
         //Item randomItem = new Item(randomSpeed, randomPower, randomAccuracy);

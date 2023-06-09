@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     public Vector3 angleAdjustment = Vector3.zero;
 
     public float forceMultiplier = 1f;
-    private bool inCooldown = false;
+    private bool m_inCooldown = false;
 
     void Awake() {
         rb2D = GetComponent<Rigidbody2D>();
@@ -41,22 +41,43 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if ((!inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
+        if ((!m_inCooldown) && !(GameManager.Instance.IsGameStateThis(StateType.GAME_OVER))) {
             StartCoroutine(AttackCooldown());
         }
     }
 
     private IEnumerator AttackCooldown() {
-        inCooldown = true;
+        m_inCooldown = true;
+
+        // ATTACK
         GetAngleToHitPlayer();
-        yield return new WaitForSeconds(Random.Range(1f, 10f));
-        inCooldown = false;
+
+        // COOLDOWN AND SHOW BALL IN COOLDOWN
+        SpriteRenderer enemySprite = GetComponent<SpriteRenderer>();
+        Color initialColor = enemySprite.color;
+        float randomAttackSpeed = Random.Range(4f, 0.125f);
+        // Since attack speed is attacks per second. Seconds to wait is 1 / attacks per second
+        float secondsToWait = 1f / randomAttackSpeed;
+
+        enemySprite.color = Color.black;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        enemySprite.color = Color.gray;
+        yield return new WaitForSeconds(secondsToWait / 3);
+        enemySprite.color = new Color(0.75f, 0.75f, 0.75f, 1);
+        yield return new WaitForSeconds(secondsToWait / 3);
+        enemySprite.color = initialColor;
+
+        // SHOULD REMOVE LATER WHEN REVAMPING AI/POLISHING TELEGRAPHING
+        yield return new WaitForSeconds(0.5f);
+        // PUT THIS HERE SO IT SHOWS THE INITAIL COLOR BEFORE ATTACKING;
+
+        m_inCooldown = false;
     }
 
     private IEnumerator Cooldown(float cooldownTime) {
-        inCooldown = true;
+        m_inCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
-        inCooldown = false;
+        m_inCooldown = false;
     }
 
 
