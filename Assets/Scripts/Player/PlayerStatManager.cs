@@ -38,18 +38,19 @@ public class PlayerStatManager : AbstractStatManager
         m_playerStats.SetCurrentAccuracy(newAccuracy);
     }
 
-    public override void CalculateTotalStatsFromItems() {
-        // CHANGE WHEN ITEMS ARE IMPLEMENTED
-        m_totalAttackSpeedFromItems = 2;
-        m_totalMaxShootForceFromItems = 200;
-        m_totalAccuracyFromItems = 100;
+    public override void GetStatsFromItems() {
+        m_totalAttackSpeedFromItems = PlayerItemManager.Instance.GetTotalAttackSpeedFromItems();
+        m_totalMaxShootPowerFromItems = PlayerItemManager.Instance.GetTotalMaxShootPowerFromItems();
+        m_totalAccuracyFromItems = PlayerItemManager.Instance.GetTotalAccuracyFromItems();
     }
 
     public void UpdateAllStats() {
-        CalculateTotalStatsFromItems();
+        GetStatsFromItems();
         ModifyAttackSpeed(m_totalAttackSpeedFromItems);
-        ModifyMaxShootPower(m_totalMaxShootForceFromItems);
+        ModifyMaxShootPower(m_totalMaxShootPowerFromItems);
         ModifyAccuracy(m_totalAccuracyFromItems);
+        // Update Text
+        UIManager.Instance.UpdateStatsTextAmount();
     }
 
     public void DecreasePlayerLives(int amount) {
