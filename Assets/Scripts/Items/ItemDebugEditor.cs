@@ -9,8 +9,16 @@ public class ItemDebugEditor : Editor {
 
         PlayerItemManager itemManager = (PlayerItemManager)target;
 
+        GUILayout.BeginHorizontal();
+
         if (GUILayout.Button("Generate Random Equipped Item")) {
             itemManager.GenerateRandomEquippedItem();
         }
+
+        if (GUILayout.Button("Remove all items")) {
+            itemManager.UnequipAllItems();
+        }
+
+        GUILayout.EndHorizontal();
     }
 }
