@@ -41,6 +41,12 @@ public class ShopManager : MonoBehaviour
         List<Item> shopItems;
         m_shopInventory.RandomizeCurrentShopItems();
         shopItems = m_shopInventory.GetCurrentShopitems();
+
+        int index = 0;
+        shopItemUIs.ForEach(x => {
+            x.SetShopItem(shopItems[index]);
+            index++;
+        });
     }
 
     public List<Item> GetShopItems() {

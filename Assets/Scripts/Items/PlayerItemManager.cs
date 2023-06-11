@@ -28,6 +28,7 @@ public class PlayerItemManager : MonoBehaviour
     public void EquipItem(Item itemToEquip) {
         m_equippedItems.Add(itemToEquip);
         CalculateTotalStatsFromItems();
+        PlayerStatManager.Instance.UpdateAllStats();
     }
 
     public void UnequipItem(Item itemToUnequip) {
@@ -41,6 +42,7 @@ public class PlayerItemManager : MonoBehaviour
         //m_equippedItems.ForEach(x => {if (x.name == nameToUnequip) m_equippedItems.Remove(x);});
         // Does equippedItems.Remove(itemToUnequip) work here?
         CalculateTotalStatsFromItems();
+        PlayerStatManager.Instance.UpdateAllStats();
     }
 
     private void CalculateTotalStatsFromItems() {
@@ -58,17 +60,17 @@ public class PlayerItemManager : MonoBehaviour
     }
 
     public float GetTotalAttackSpeedFromItems() {
-        CalculateTotalStatsFromItems();
+        //CalculateTotalStatsFromItems();
         return m_totalAttackSpeed;
     }
 
     public float GetTotalMaxShootPowerFromItems() {
-        CalculateTotalStatsFromItems();
+        //CalculateTotalStatsFromItems();
         return m_totalMaxShootPower;
     }
 
     public float GetTotalAccuracyFromItems() {
-        CalculateTotalStatsFromItems();
+        //CalculateTotalStatsFromItems();
         return m_totalAccuracy;
     }
 

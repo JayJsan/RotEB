@@ -12,26 +12,33 @@ public class ShopItemUI : MonoBehaviour
         itemThree
     }
     public itemPosition itemNum;
-    private TextMeshProUGUI m_itemName;
-    private TextMeshProUGUI m_itemDescription;
-    private TextMeshProUGUI m_itemStats;
-    private Button m_button;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemDescription;
+    public TextMeshProUGUI itemStats;
+    public TextMeshProUGUI buttonText;
+    public Button button;
     private Item m_item;
     public bool isItemChosen = false;
+    public List<TextMeshProUGUI> texts;
     // Start is called before the first frame update
     void Start()
     {
-        List<TextMeshProUGUI> texts = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
+        // NEEDA FIX THIS -- NOT FINDING COMPONENTS WHEN OBJECT INACTIVE FOR SOME REASON
+        // -- TEMP FIX BY GIVING REFERENCE IN EDITOR
+        texts = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
         texts.ForEach(x => {
             switch(x.gameObject.name) {
             case "ItemName":
-                x = m_itemName;
+                itemName = x;
             break;
             case "ItemDescription":
-                x = m_itemDescription;
+                itemDescription = x;
             break;
             case "ItemStats":
-                x = m_itemStats;
+                itemStats = x;
+            break;
+            case "Text (TMP)":
+                buttonText = x;
             break;
             default:
                 Debug.LogWarning("No TextMeshProGUI found! : Is " + x.name + " | " + x.gameObject.name);
@@ -39,14 +46,25 @@ public class ShopItemUI : MonoBehaviour
             }
         });
 
-        m_button = GetComponentInChildren<Button>(true);
-        m_button.onClick.AddListener(OnButtonClicked);
+        button = GetComponentInChildren<Button>(true);
+        button.onClick.AddListener(OnButtonClicked);
+    }
+
+    private void OnEnable() {
+        button.image.color = Color.white;
+        buttonText.text = "Choose";    
     }
 
     private void OnButtonClicked() {
-        isItemChosen = true;
-        ShopManager.Instance.ChooseItem(this, m_item);
-        m_button.gameObject.SetActive(false);
+        if (!isItemChosen) {
+            isItemChosen = true;
+            ShopManager.Instance.ChooseItem(this, m_item);
+
+            //m_button.gameObject.SetActive(false);
+
+            buttonText.text = "Chosen!";
+            button.image.color = Color.gray;
+        }
     }
 
     public void SetShopItem(Item item) {
@@ -60,11 +78,12 @@ public class ShopItemUI : MonoBehaviour
     }
 
     private void UpdateTextDetails(string itemName, string itemDescription) {
-        m_itemName.text = itemName;
-        m_itemDescription.text = itemDescription;
+        this.itemName.text = itemName;
+        this.itemDescription.text = itemDescription;
     }
 
     private void UpdateTextStats(float speed, float maxPower, float accuracy) {
         string newTextStats = $"Attack Speed: {speed}\nMax Shoot Power: {maxPower}\nAccuracy: {accuracy}";
+        this.itemStats.text = newTextStats;
     }
 }
