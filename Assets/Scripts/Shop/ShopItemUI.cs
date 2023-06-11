@@ -53,6 +53,7 @@ public class ShopItemUI : MonoBehaviour
     private void OnEnable() {
         button.image.color = Color.white;
         buttonText.text = "Choose";    
+        isItemChosen = false;
     }
 
     private void OnButtonClicked() {

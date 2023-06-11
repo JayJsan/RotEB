@@ -29,7 +29,7 @@ public class ShopInventory : MonoBehaviour
 
     public void RandomizeCurrentShopItems() {
         for (int i = 0; i < m_amountOfShopItemsAllowed; i++) {
-            Item item = m_shopItemPool[Random.Range(0,m_currentShopitems.Count)];
+            Item item = m_shopItemPool[Random.Range(0,m_shopItemPool.Count)];
             m_currentShopitems.Add(item);
         }
     }
