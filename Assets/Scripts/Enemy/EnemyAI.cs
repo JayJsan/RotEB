@@ -16,11 +16,13 @@ public class EnemyAI : MonoBehaviour
     public Vector3 angleAdjustment = Vector3.zero;
 
     public float forceMultiplier = 1f;
+    public float attackSpeed = 1f;
     private bool m_inCooldown = false;
 
     void Awake() {
         rb2D = GetComponent<Rigidbody2D>();
         cc2D = GetComponent<CircleCollider2D>();
+        attackSpeed = Random.Range(4f, 0.125f);
     }
     
     // Start is called before the first frame update
@@ -55,15 +57,15 @@ public class EnemyAI : MonoBehaviour
         // COOLDOWN AND SHOW BALL IN COOLDOWN
         SpriteRenderer enemySprite = GetComponent<SpriteRenderer>();
         Color initialColor = enemySprite.color;
-        float randomAttackSpeed = Random.Range(4f, 0.125f);
+        //float randomAttackSpeed = Random.Range(4f, 0.125f);
         // Since attack speed is attacks per second. Seconds to wait is 1 / attacks per second
-        float secondsToWait = 1f / randomAttackSpeed;
+        float secondsToWait = 1f / attackSpeed;
 
-        enemySprite.color = Color.black;
+        enemySprite.color = new Color(initialColor.r / 4, initialColor.g / 4, initialColor.b / 4, 1);
         yield return new WaitForSeconds(secondsToWait / 3);
-        enemySprite.color = Color.gray;
+        enemySprite.color = new Color(3 * initialColor.r / 4, 3 * initialColor.g / 4, 3 * initialColor.b / 4, 1);
         yield return new WaitForSeconds(secondsToWait / 3);
-        enemySprite.color = new Color(0.75f, 0.75f, 0.75f, 1);
+        enemySprite.color = new Color(initialColor.r / 2, initialColor.g / 2, initialColor.b / 2, 1);
         yield return new WaitForSeconds(secondsToWait / 3);
         enemySprite.color = initialColor;
 

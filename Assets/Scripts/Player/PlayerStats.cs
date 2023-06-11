@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : AbstractBallStats
 {
-    private int m_playerLives = 3;
+    private int m_playerLives = 10;
 
     public void SetPlayerLives(int amount) {
         m_playerLives = amount;

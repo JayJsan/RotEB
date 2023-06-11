@@ -32,8 +32,22 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnRandomEnemy(Vector3 position) {
         // SPAWN RANDOM ENEMIES FROM ARRAY, CURRENTLY USING A PREFAB
+        Vector3 spawnPosition = transform.position;
+        int yLevel = 1;
         for (int i = 0; i < numberOfEnemiesToSpawn; i++) {
-        currentEnemiesAlive.Add(Instantiate(uniqueEnemiesToSpawn[Random.Range(0,uniqueEnemiesToSpawn.Length)], position, Quaternion.identity));
+            if (i >= 6) {
+                spawnPosition.y += 1 * yLevel;
+            } else if (i >= 12) {
+                spawnPosition.y -= 1 * yLevel;   
+            }
+
+            if ((i % 2) == 0) {
+                spawnPosition.x += 1 * i;
+            } else {
+                spawnPosition.x -= 1 * i;
+            }
+            
+            currentEnemiesAlive.Add(Instantiate(uniqueEnemiesToSpawn[Random.Range(0,uniqueEnemiesToSpawn.Length)], spawnPosition, Quaternion.identity));
         }
     }
 
