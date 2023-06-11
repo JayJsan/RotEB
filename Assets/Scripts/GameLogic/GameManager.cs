@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
             break;
 
             case StateType.PLAYER_TURN:
+                UIManager.Instance.UpdateStatsTextAmount();
                 CanvasManager.Instance.SwitchCanvas(CanvasType.GameUI);
                 PlayerManager.Instance.EnablePlayerControl();
             break;
@@ -89,7 +90,9 @@ public class GameManager : MonoBehaviour
             case StateType.SHOP_MENU:
                 PlayerManager.Instance.DeactivatePlayer();
                 CanvasManager.Instance.SwitchCanvas(CanvasType.ShopScreen);
+                ShopManager.Instance.RandomizeShop();
             break;
+
 
             default:
 
