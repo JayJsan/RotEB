@@ -57,7 +57,7 @@ public class ShopManager : MonoBehaviour
         PlayerItemManager.Instance.EquipItem(item);
         shopItemUIs.ForEach(x => {
             if (x.isItemChosen != shopItemUI.isItemChosen) {
-                x.gameObject.SetActive(false);
+                x.DisableItem();
             }
         });
     }

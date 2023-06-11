@@ -19,6 +19,7 @@ public class ShopItemUI : MonoBehaviour
     public Button button;
     private Item m_item;
     public bool isItemChosen = false;
+    public bool otherItemChosen = false;
     public List<TextMeshProUGUI> texts;
     // Start is called before the first frame update
     void Start()
@@ -54,10 +55,11 @@ public class ShopItemUI : MonoBehaviour
         button.image.color = Color.white;
         buttonText.text = "Choose";    
         isItemChosen = false;
+        otherItemChosen = false;
     }
 
     private void OnButtonClicked() {
-        if (!isItemChosen) {
+        if ((!isItemChosen)&& (!otherItemChosen)) {
             isItemChosen = true;
             ShopManager.Instance.ChooseItem(this, m_item);
 
@@ -86,5 +88,11 @@ public class ShopItemUI : MonoBehaviour
     private void UpdateTextStats(float speed, float maxPower, float accuracy) {
         string newTextStats = $"Attack Speed: {speed}\nMax Shoot Power: {maxPower}\nAccuracy: {accuracy}";
         this.itemStats.text = newTextStats;
+    }
+
+    public void DisableItem() {
+        otherItemChosen = true;
+        button.image.color = new Color(0.35f, 0.35f, 0.35f, 1);
+        buttonText.text = "Unavailable"; 
     }
 }
