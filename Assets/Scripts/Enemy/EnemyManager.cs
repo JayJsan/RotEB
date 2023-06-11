@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance { get; private set; }
     public GameObject[] uniqueEnemiesToSpawn;
     public List<GameObject> currentEnemiesAlive;
-
+    private int numberOfEnemiesToSpawn = 1;
     private void Awake() {
         // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -32,7 +32,23 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnRandomEnemy(Vector3 position) {
         // SPAWN RANDOM ENEMIES FROM ARRAY, CURRENTLY USING A PREFAB
-        currentEnemiesAlive.Add(Instantiate(uniqueEnemiesToSpawn[Random.Range(0,uniqueEnemiesToSpawn.Length)], position, Quaternion.identity));
+        Vector3 spawnPosition = transform.position;
+        int yLevel = 1;
+        for (int i = 0; i < numberOfEnemiesToSpawn; i++) {
+            if (i >= 6) {
+                spawnPosition.y += 1 * yLevel;
+            } else if (i >= 12) {
+                spawnPosition.y -= 1 * yLevel;   
+            }
+
+            if ((i % 2) == 0) {
+                spawnPosition.x += 1 * i;
+            } else {
+                spawnPosition.x -= 1 * i;
+            }
+            
+            currentEnemiesAlive.Add(Instantiate(uniqueEnemiesToSpawn[Random.Range(0,uniqueEnemiesToSpawn.Length)], spawnPosition, Quaternion.identity));
+        }
     }
 
     public void ClearAllEnemies() {
@@ -59,5 +75,9 @@ public class EnemyManager : MonoBehaviour
         }
         
         return enemiesAlive;
+    }
+
+    public void SetNumberOfEnemiesToSpawn(int amount) {
+        numberOfEnemiesToSpawn = amount;
     }
 }
