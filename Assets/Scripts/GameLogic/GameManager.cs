@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private StateType m_currentGameState = StateType.DEFAULT;
     public GameObject panel;
-
+    private int numberOfEnemiesToSpawn = 1;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -111,10 +111,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void StartGame() {
-
+  
     }
 
     public void RestartGame() {
+        PlayerStatManager.Instance.ResetAllStats();
+        EnemyManager.Instance.SetNumberOfEnemiesToSpawn(1);
         PlayerStatManager.Instance.SetPlayerLives(3);
         EnemyManager.Instance.ClearAllEnemies();
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
@@ -122,7 +124,9 @@ public class GameManager : MonoBehaviour
     }
 
     public void ContinueGame() {
+        numberOfEnemiesToSpawn *= 2;
         EnemyManager.Instance.ClearAllEnemies();
+        EnemyManager.Instance.SetNumberOfEnemiesToSpawn(numberOfEnemiesToSpawn);
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
         PlayerManager.Instance.ReactivatePlayer();
     }

@@ -53,6 +53,10 @@ public class PlayerStatManager : AbstractStatManager
         UIManager.Instance.UpdateStatsTextAmount();
     }
 
+    public void ResetAllStats() {
+        m_playerStats.ResetStatsToDefault();
+    }
+
     public void DecreasePlayerLives(int amount) {
         int playerLives = m_playerStats.GetPlayerLives();
         if (amount >= playerLives) {
