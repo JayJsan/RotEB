@@ -6,6 +6,7 @@ using UnityEngine;
 public class BallControl : MonoBehaviour
 {
     // 7/06/23 - NEED TO IMPROVE 
+    // 13/06/23 - MIGRATE INTO playerinput.cs
     public Material material;
     public float startWidth = 0.2f;
     public float endWidth = 0.0f;

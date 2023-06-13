@@ -7,8 +7,9 @@ public class PlayerItemManager : MonoBehaviour
     // 10/06/23 - NEED TO IMPROVE 
     public static PlayerItemManager Instance { get; private set; }
     [SerializeField]
-    private List<Item> m_equippedItems;
-
+    private List<Item> m_equippedPassiveItems;
+    private Item m_equippedActiveItem = null;
+    private List<Item> m_unequippedItems;
     private float m_totalAttackSpeed;
     private float m_totalMaxShootPower;
     private float m_totalAccuracy;
@@ -26,16 +27,22 @@ public class PlayerItemManager : MonoBehaviour
     }  
 
     public void EquipItem(Item itemToEquip) {
-        m_equippedItems.Add(itemToEquip);
+        if (itemToEquip.itemType == Item.Type.Active) {
+            m_equippedActiveItem = itemToEquip;
+        }
+        if (itemToEquip.itemType == Item.Type.Passive) {
+            m_equippedPassiveItems.Add(itemToEquip);
+        }
         CalculateTotalStatsFromItems();
         PlayerStatManager.Instance.UpdateAllStats();
     }
 
-    public void UnequipItem(Item itemToUnequip) {
+    public void UnequipPassiveItem(Item itemToUnequip) {
         string nameToUnequip = itemToUnequip.itemName;
-        foreach (Item item in m_equippedItems) {
+        foreach (Item item in m_equippedPassiveItems) {
             if (item.itemName == nameToUnequip) {
-                m_equippedItems.RemoveAt(m_equippedItems.IndexOf(item));
+                m_unequippedItems.Add(item);
+                m_equippedPassiveItems.RemoveAt(m_equippedPassiveItems.IndexOf(item));
                 break;
             }
         }
@@ -45,14 +52,26 @@ public class PlayerItemManager : MonoBehaviour
         PlayerStatManager.Instance.UpdateAllStats();
     }
 
+    public void UnequipCurrentActiveItem() {
+        m_unequippedItems.Add(m_equippedActiveItem);
+        m_equippedActiveItem = null;
+    }
+
     private void CalculateTotalStatsFromItems() {
         // Reset stats first
         m_totalAttackSpeed = 0;
         m_totalMaxShootPower = 0;
         m_totalAccuracy = 0;
 
-        // Calculate all
-        foreach (Item equippedItem in m_equippedItems) {
+        // Calcualte active item stats
+        if (m_equippedActiveItem != null) {
+            m_totalAttackSpeed += m_equippedActiveItem.itemSpeed;
+            m_totalMaxShootPower += m_equippedActiveItem.itemPower;
+            m_totalAccuracy += m_equippedActiveItem.itemAccuracy;
+        }
+        
+        // Calculate passive item stats
+        foreach (Item equippedItem in m_equippedPassiveItems) {
             m_totalAttackSpeed += equippedItem.itemSpeed;
             m_totalMaxShootPower += equippedItem.itemPower;
             m_totalAccuracy += equippedItem.itemAccuracy;
@@ -74,6 +93,13 @@ public class PlayerItemManager : MonoBehaviour
         return m_totalAccuracy;
     }
 
+    public void ActivateItemAbility() {
+        if (m_equippedActiveItem != null) {
+            // IMPLEMENT COOLDOWN
+            m_equippedActiveItem.itemAbility.Activate(PlayerManager.Instance.GetPlayerGameObject());
+        }
+    }
+
     // DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- 
     // DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- 
     // DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- DEBUG PURPOSES -- 
@@ -87,12 +113,16 @@ public class PlayerItemManager : MonoBehaviour
         randomItem.itemPower = randomPower;
         randomItem.itemAccuracy = randomAccuracy;
         
-        m_equippedItems.Add(randomItem);
+        m_equippedPassiveItems.Add(randomItem);
         PlayerStatManager.Instance.UpdateAllStats();
     }
 
-    public void UnequipAllItems() {
-        m_equippedItems.Clear();
+    public void UnequipAllPassiveItems() {
+        m_equippedPassiveItems.Clear();
         PlayerStatManager.Instance.UpdateAllStats();
+    }
+
+    public void EquipItemWithDashAbility() {
+        Debug.LogWarning("HAVE NOT IMPLEMENTED YET SORRY");
     }
 }
