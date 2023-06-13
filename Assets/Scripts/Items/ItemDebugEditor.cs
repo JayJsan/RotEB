@@ -15,8 +15,16 @@ public class ItemDebugEditor : Editor {
             itemManager.GenerateRandomEquippedItem();
         }
 
-        if (GUILayout.Button("Remove all items")) {
-            itemManager.UnequipAllItems();
+        if (GUILayout.Button("Equip Dash Item")) {
+
+        }
+
+        if (GUILayout.Button("Remove All Passive Items")) {
+            itemManager.UnequipAllPassiveItems();
+        }
+
+        if (GUILayout.Button("Remove Active Item")) {
+            itemManager.UnequipCurrentActiveItem();
         }
 
         GUILayout.EndHorizontal();

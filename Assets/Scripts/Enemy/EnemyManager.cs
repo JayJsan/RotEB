@@ -14,6 +14,9 @@ public class EnemyManager : MonoBehaviour
     public GameObject[] uniqueEnemiesToSpawn;
     public List<GameObject> currentEnemiesAlive;
     private int numberOfEnemiesToSpawn = 1;
+
+    private int enemyDifficultyLevel = 1; // DO SOMETHING WITH THIS LATER   
+
     private void Awake() {
         // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
