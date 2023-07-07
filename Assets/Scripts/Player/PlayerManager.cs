@@ -71,6 +71,7 @@ public class PlayerManager : MonoBehaviour
         int currentFlashes = 0;
         int maxFlashes = 4;
         string livesText = "Respawning";
+
         m_player.GetComponent<CircleCollider2D>().enabled = false;
         while (currentFlashes < maxFlashes) {
             UIManager.Instance.UpdateLivesTextStatus(livesText);
@@ -83,6 +84,9 @@ public class PlayerManager : MonoBehaviour
         }
         m_player.GetComponent<CircleCollider2D>().enabled = true;
         UIManager.Instance.UpdateLivesTextAmount();
+
+        // FIX THIS -- 17/06/23 -- DO NOT UPDATE GAME STATE IN ENUMRATOR OR ATLEAST CHECK IF CURRENT STATE IS NOT GAMEPLAY
+
         if (PlayerManager.Instance.GetPlayerLives() == 0) {
             GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
         } else {

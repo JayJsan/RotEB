@@ -8,5 +8,6 @@ public enum CanvasType {
     EndScreen,   // EndScreen UI Container
     ShopScreen, // ShopScreen UI Container
     WinScreen, // WinScreen UI Container
+    EquipmentScreen, // Equipment UI Container
 }
 
