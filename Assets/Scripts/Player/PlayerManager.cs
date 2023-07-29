@@ -90,7 +90,9 @@ public class PlayerManager : MonoBehaviour
         if (PlayerManager.Instance.GetPlayerLives() == 0) {
             GameManager.Instance.UpdateGameState(StateType.GAME_OVER);
         } else {
-            GameManager.Instance.UpdateGameState(StateType.PLAYER_TURN);
+            if (GameManager.Instance.IsGameStateThis(StateType.PLAYER_RESPAWNING)) {
+                GameManager.Instance.UpdateGameState(StateType.PLAYER_TURN);
+            }
         }
     }
     #endregion
