@@ -9,6 +9,7 @@ public enum StateType {
     PLAYER_RESPAWN,// Player needs to respawn.
     PLAYER_RESPAWNING,// Player is respawning.
     PLAYER_SUNK,   // Player has been sunk.
+    PLAYER_COOLDOWN, // Player has taken a shot.
     GAME_OVER,
     GAME_WIN,
     GAME_START,

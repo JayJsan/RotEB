@@ -168,6 +168,7 @@ public class BallControl : MonoBehaviour
     }
 
     public IEnumerator Reload() {
+        GameManager.Instance.UpdateGameState(StateType.PLAYER_COOLDOWN);
         m_inCooldown = true;
         SpriteRenderer playerSprite = PlayerManager.Instance.GetPlayerGameObject().GetComponent<SpriteRenderer>();
         // Since attack speed is attacks per second. Seconds to wait is 1 / attacks per second
@@ -181,6 +182,9 @@ public class BallControl : MonoBehaviour
         yield return new WaitForSeconds(secondsToWait / 3);
         playerSprite.color = Color.white;
         m_inCooldown = false;
+
+        // Has finished reloading so player can take another shot
+        GameManager.Instance.UpdateGameState(StateType.PLAYER_TURN);
     }
 
     public void DisableBallControls() { 

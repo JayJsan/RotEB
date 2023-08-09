@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private StateType m_currentGameState = StateType.DEFAULT;
     public GameObject panel;
     private int numberOfEnemiesToSpawn = 1;
+    private bool m_isTimeFrozen = false;
+    private bool m_isSlowMotion = false;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -34,11 +36,17 @@ public class GameManager : MonoBehaviour
     
         // TEMPORARY SLOW DOWN ABILITY IN
         if (Input.GetKey(KeyCode.Space)) {
+            m_isTimeFrozen = false;
+            m_isSlowMotion = true;
             DoSlowMotion();
-        } else {
+        }   else if (m_currentGameState == StateType.PLAYER_TURN && !m_isSlowMotion) {
+            FreezeTime();
+        }   else if (!m_isTimeFrozen && !m_isSlowMotion) {
             Time.timeScale += (1f / 0.5f) * Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
             panel.SetActive(false);
+        } else {
+            m_isSlowMotion = false;
         }
     }
 
@@ -71,6 +79,12 @@ public class GameManager : MonoBehaviour
                 UIManager.Instance.UpdateStatsTextAmount();
                 CanvasManager.Instance.SwitchCanvas(CanvasType.GameUI);
                 PlayerManager.Instance.EnablePlayerControl();
+                FreezeTime();
+            break;
+
+            case StateType.PLAYER_COOLDOWN:
+                UnfreezeTime();
+                PlayerManager.Instance.DisablePlayerControl();
             break;
 
             case StateType.MAIN_MENU:
@@ -108,6 +122,22 @@ public class GameManager : MonoBehaviour
         panel.SetActive(true);
         Time.timeScale = 0.05f;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    private void FreezeTime() {
+        panel.SetActive(true);
+        if (!m_isTimeFrozen) {
+        m_isTimeFrozen = true;
+        Time.timeScale = 0f;
+        }
+    }
+
+    private void UnfreezeTime() {
+        panel.SetActive(false);
+        if (m_isTimeFrozen) {
+        m_isTimeFrozen = false;
+        Time.timeScale = 1f;
+        }
     }
 
     public void StartGame() {
