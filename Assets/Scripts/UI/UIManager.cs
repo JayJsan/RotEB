@@ -16,7 +16,10 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI powerTMP;
     [SerializeField]    
     private TextMeshProUGUI accuracyTMP;
-
+    [SerializeField]
+    private GameObject m_equipmentUI;
+    private UIEquipmentManager m_UIEquipmentManager;
+    private bool m_isInventoryOpen = false;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -57,6 +60,8 @@ public class UIManager : MonoBehaviour
         } else {
             Debug.LogWarning("TextManager : CAN'T FIND AccuracyText");
         }
+
+        m_UIEquipmentManager = m_equipmentUI.GetComponentInChildren<UIEquipmentManager>();
     }
 
     // Update is called once per frame
@@ -84,6 +89,40 @@ public class UIManager : MonoBehaviour
         speedTMP.text = "Speed: " + PlayerStatManager.Instance.GetCurrentAttackSpeed();
         powerTMP.text = "Power: " + PlayerStatManager.Instance.GetCurrentMaxShootPower();
         accuracyTMP.text = "Accuracy: " + PlayerStatManager.Instance.GetCurrentAccuracy();
+    }
+    #endregion
+
+    #region INVENTORY
+    private void OpenInventory() {
+        if (!System.Object.ReferenceEquals(m_equipmentUI, null)) {
+            m_equipmentUI.SetActive(true);
+        } else {
+            Debug.LogWarning("Equipment UI GameObject not found!");
+        }
+    }
+
+    private void CloseInventory() {
+        if (!System.Object.ReferenceEquals(m_equipmentUI, null)) {
+            m_equipmentUI.SetActive(false);
+        } else {
+            Debug.LogWarning("Equipment UI GameObject not found!");
+        }
+    }
+
+    public void ToggleInventory() {
+        if (m_isInventoryOpen) {
+            m_isInventoryOpen = false;
+            CloseInventory();
+        }  else if (!m_isInventoryOpen) {
+            m_isInventoryOpen = true;
+            OpenInventory();
+            UpdateInventory();
+        }
+    }
+
+    private void UpdateInventory() {
+        m_UIEquipmentManager.UpdatePassiveInvetoryList(PlayerItemManager.Instance.GetPassiveItems());
+        m_UIEquipmentManager.UpdateActiveItem(PlayerItemManager.Instance.GetActiveItem());
     }
     #endregion
 }

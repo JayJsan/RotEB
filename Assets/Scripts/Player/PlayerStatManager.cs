@@ -54,6 +54,7 @@ public class PlayerStatManager : AbstractStatManager
     }
 
     public void ResetAllStats() {
+        PlayerItemManager.Instance.UnequipAllItems();
         m_playerStats.ResetStatsToDefault();
     }
 
