@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private int numberOfEnemiesToSpawn = 1;
     private bool m_isTimeFrozen = false;
     private bool m_isSlowMotion = false;
+    private bool m_freezeTimeOnTurn = true;
     private void Awake() {
     // If there is an instance, and it's not me, delete myself.
         if (Instance != null && Instance != this) 
@@ -38,15 +39,22 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) {
             m_isTimeFrozen = false;
             m_isSlowMotion = true;
+            panel.SetActive(true);
             DoSlowMotion();
         }   else if (m_currentGameState == StateType.PLAYER_TURN && !m_isSlowMotion) {
             FreezeTime();
         }   else if (!m_isTimeFrozen && !m_isSlowMotion) {
             Time.timeScale += (1f / 0.5f) * Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-            panel.SetActive(false);
         } else {
             m_isSlowMotion = false;
+            panel.SetActive(false);
+        }
+
+        if (!m_freezeTimeOnTurn) {
+            Time.timeScale += (1f / 0.5f) * Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+            panel.SetActive(false);
         }
     }
 
@@ -125,6 +133,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void FreezeTime() {
+        if (!m_freezeTimeOnTurn) {
+            return;
+        }
+
+
         panel.SetActive(true);
         if (!m_isTimeFrozen) {
         m_isTimeFrozen = true;
@@ -137,6 +150,16 @@ public class GameManager : MonoBehaviour
         if (m_isTimeFrozen) {
         m_isTimeFrozen = false;
         Time.timeScale = 1f;
+        }
+    }
+
+    public void ToggleTimeFreezeOnTurn() {
+        if (m_freezeTimeOnTurn) {
+            UnfreezeTime();
+            m_freezeTimeOnTurn = false;
+        }
+        else {
+            m_freezeTimeOnTurn = true;
         }
     }
 
@@ -158,6 +181,7 @@ public class GameManager : MonoBehaviour
         EnemyManager.Instance.ClearAllEnemies();
         EnemyManager.Instance.SetNumberOfEnemiesToSpawn(numberOfEnemiesToSpawn);
         EnemyManager.Instance.SpawnRandomEnemy(new Vector3(8,0,0));
+        UpdateGameState(StateType.PLAYER_TURN);
         PlayerManager.Instance.ReactivatePlayer();
     }
     

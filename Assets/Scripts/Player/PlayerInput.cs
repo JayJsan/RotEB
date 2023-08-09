@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
         Idle,
         ActivateAbility,
         ViewInventory,
+        ToggleTurnTimeStop,
         // ControlBall or something
     }
     // Start is called before the first frame update
@@ -64,7 +65,10 @@ public class PlayerInput : MonoBehaviour
             case Action.Idle:
                 // do nothing
                 break;
-            
+            case Action.ToggleTurnTimeStop:
+                GameManager.Instance.ToggleTimeFreezeOnTurn();
+                break;
+
             case Action.ActivateAbility:
                 // activate ability
                 Debug.Log("Mouse Key Ability Pressed!");
@@ -84,8 +88,8 @@ public class PlayerInput : MonoBehaviour
     }
     
     private Action DetectMouseInput() {
-        if (Input.GetMouseButtonDown((int)abilityButton)) {
-            return Action.ActivateAbility;
+        if (Input.GetMouseButtonDown((int)MouseButton.Right)) {
+            return Action.ToggleTurnTimeStop;
         }
         return Action.Idle;
     }
