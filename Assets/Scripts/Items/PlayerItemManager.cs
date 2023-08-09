@@ -52,9 +52,24 @@ public class PlayerItemManager : MonoBehaviour
         PlayerStatManager.Instance.UpdateAllStats();
     }
 
+    public void UnequipAllItems() {
+        UnequipAllPassiveItems();
+        UnequipCurrentActiveItem();
+    }
+
+    public void UnequipAllPassiveItems() {
+        m_equippedPassiveItems.Clear();
+        CalculateTotalStatsFromItems();
+        PlayerStatManager.Instance.UpdateAllStats();
+    }
+
     public void UnequipCurrentActiveItem() {
+        if (!System.Object.ReferenceEquals(GameObject.FindGameObjectWithTag("Player"), null)) {
         m_unequippedItems.Add(m_equippedActiveItem);
+        }
         m_equippedActiveItem = null;
+        CalculateTotalStatsFromItems();
+        PlayerStatManager.Instance.UpdateAllStats();
     }
 
     private void CalculateTotalStatsFromItems() {
@@ -93,6 +108,14 @@ public class PlayerItemManager : MonoBehaviour
         return m_totalAccuracy;
     }
 
+    public List<Item> GetPassiveItems() {
+        return m_equippedPassiveItems;
+    }
+
+    public Item GetActiveItem() {
+        return m_equippedActiveItem;
+    }
+
     public void ActivateItemAbility() {
         if (m_equippedActiveItem != null) {
             // IMPLEMENT COOLDOWN
@@ -114,11 +137,6 @@ public class PlayerItemManager : MonoBehaviour
         randomItem.itemAccuracy = randomAccuracy;
         
         m_equippedPassiveItems.Add(randomItem);
-        PlayerStatManager.Instance.UpdateAllStats();
-    }
-
-    public void UnequipAllPassiveItems() {
-        m_equippedPassiveItems.Clear();
         PlayerStatManager.Instance.UpdateAllStats();
     }
 

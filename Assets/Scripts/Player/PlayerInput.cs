@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     private enum Action {
         Idle,
         ActivateAbility,
+        ViewInventory,
         // ControlBall or something
     }
     // Start is called before the first frame update
@@ -49,6 +50,10 @@ public class PlayerInput : MonoBehaviour
                 PlayerItemManager.Instance.ActivateItemAbility();
                 break;
 
+            case Action.ViewInventory:
+                UIManager.Instance.ToggleInventory();
+                break;
+
         }
 
         switch (DetectMouseInput()) {
@@ -71,6 +76,9 @@ public class PlayerInput : MonoBehaviour
     private Action DetectKeyboardInput() {
         if (Input.GetKeyDown(abilityKey)) {
             return Action.ActivateAbility;
+        }
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            return Action.ViewInventory;
         }
         return Action.Idle;
     }
